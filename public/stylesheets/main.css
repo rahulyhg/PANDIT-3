@@ -1,0 +1,85 @@
+body{
+    font-family: 'Montserrat', sans-serif;
+    font-size: medium;
+    padding-top: 70px;
+}
+
+.footer-container{
+    background-color:#d1e0e0;
+    padding-top: 15px;
+    padding-bottom:15px;
+    font-weight: lighter
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
+}
+
+.navbar{
+   background-color: #ffab1a;
+   
+}
+
+.navbar-brand{
+    padding: 5px 15px;
+    
+}
+
+.navbar-default .navbar-brand{
+    color:white;
+}
+
+.navbar-brand>img{
+    display: inline;
+    padding-right: 5px;
+}
+
+.navbar-default .navbar-nav>li>a{
+    color:white;
+}
+
+.col-md-4{
+    padding-bottom: 15px;
+}
+
+.landing-bg{
+    background-color: #ffab1a;
+    height: 100%;
+    width:100%;
+    position:fixed;
+    padding:0;
+    margin:0;
+    top:0;
+    left:0;
+}
+
+.landing-h1{
+    size:8em;
+    text-shadow: 1px 1px 0px #000000;
+}
+
+.landing-content{
+    margin-top: 8%;
+}
+
+.main-bg{
+    background: url("https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/main_bg.png") center bottom no-repeat;
+    background-size:cover;
+    min-height: 700px;
+    width: 100%;
+}
+
+.main-howto{
+    width:80%;
+}
+
+.main-subject{
+    display:flex; 
+    flex-wrap:wrap;
+}
+
+.thumbnail:hover{
+    box-shadow: 5px 5px 5px #888888;
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+}

@@ -1,0 +1,117 @@
+<% include partials/header %>
+
+<div class="main-bg">
+    <div class="container">
+        <h1 class="text-center">Find Quality Tutors with PANDIT!</h1>
+        <h2 class="text-center">Just Three Simple Steps</h2>
+        <hr>
+        <div class="row main-howto center-block">
+            <div class="col-md-4 text-center">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/1.png" class="img-responsive">
+                <h3>Sign up</h3>
+                Your information will help us to pick appropriate tutor for you.
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/2.png" class="img-responsive">
+                <h3>Pick the tutors</h3>
+                Choose tutor from our database. All are verified and qualified.
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/3.png" class="img-responsive">
+                <h3>Chat directly</h3>
+                Make an appointment and talk about materials with a tutor.
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="text-center" style="margin-top:30px; margin-bottom:30px;"><h3>Choose the subject!</h3>
+    <em>"<%
+    var quote_number = Math.round(Math.random()*3);
+    var quote="";
+    if (quote_number===0){
+        quote="A wise man can learn more from a foolish question than a fool can learn from a wise answer.";
+    }else if (quote_number===1){
+        quote="There is no end to education. It is not that you read a book, pass an examination, and finish with education. The whole of life, from the moment you are born to the moment you die, is a process of learning. ";
+    }else if (quote_number===2){
+        quote="We now accept the fact that learning is a lifelong process of keeping abreast of change. And the most pressing task is to teach people how to learn. ";
+    }else if (quote_number===3){
+        quote="Surround yourself with good people. Whether they're the best or not, people are capable of learning if they've got good hearts and they're good souls. ";
+    }
+    %><%= quote %>"</em>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub1.png" class="img-responsive">
+                <div class="caption text-center">
+                    <strong>GAT</strong>
+                    <br> 
+                    General Aptitude Test
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub2.png" class="img-responsive">
+                <div class="caption text-center">
+                     <strong>ART</strong>
+                     <br>
+                     Music / Painting / ...
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub3.png" class="img-responsive">
+                <div class="caption text-center">
+                     <strong>BIOLOGY</strong>
+                     <br>
+                     Metabolism / Body / ...
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub4.png" class="img-responsive">
+                <div class="caption text-center">
+                     <strong>CHEMISTRY</strong>
+                     <br>
+                     Elements / Molecule / ...
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub5.png" class="img-responsive">
+                <div class="caption text-center">
+                     <strong>CHINESE</strong>
+                     <br>
+                     Fundamental / Advance / ...
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub6.png" class="img-responsive">
+                <div class="caption text-center">
+                     <strong>COMPUTER</strong>
+                     <br>
+                     C++ / Java / ...
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub7.png" class="img-responsive">
+                <div class="caption text-center">
+                     <strong>ENGLISH</strong>
+                     <br>
+                     Speaking / Writing / ...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>
