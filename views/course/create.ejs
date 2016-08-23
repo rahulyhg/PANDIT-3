@@ -1,0 +1,158 @@
+<% include ../partials/header %>
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-12 text-center'>
+            <h1>Create your own course</h1>
+        </div>
+    </div>
+    <div class='row'>
+        <h2>Choose the subject</h2>
+        <hr>
+    </div>
+    <form>
+        <div class="row">
+            <div class="col-md-3">
+                <label for='gat-radio'>
+                    <div class="thumbnail">
+                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub1.png" class="img-responsive">
+                        <div class="caption text-center">
+                            <input type='radio' name='subject' value='gat' id='gat-radio'> <strong>GAT</strong>
+                            <br> 
+                            General Aptitude Test
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label for='art-radio'>
+                    <div class="thumbnail">
+                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub2.png" class="img-responsive">
+                        <div class="caption text-center">
+                             <input type='radio' name='subject' value='art' id='art-radio'> <strong>ART</strong>
+                             <br>
+                             Music / Painting / ...
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label for='bio-radio'>
+                    <div class="thumbnail">
+                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub3.png" class="img-responsive">
+                        <div class="caption text-center">
+                             <input type='radio' name='subject' value='bio' id='bio-radio'> <strong>BIOLOGY</strong>
+                             <br>
+                             Metabolism / Body / ...
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label for='chem-radio'>
+                    <div class="thumbnail">
+                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub4.png" class="img-responsive">
+                        <div class="caption text-center">
+                             <input type='radio' name='subject' value='chemistry' id='chem-radio'> <strong>CHEMISTRY</strong>
+                             <br>
+                             Elements / Molecule / ...
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label for='chin-radio'>
+                    <div class="thumbnail">
+                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub5.png" class="img-responsive">
+                        <div class="caption text-center">
+                             <input type='radio' name='subject' value='chinese' id='chin-radio'> <strong>CHINESE</strong>
+                             <br>
+                             Fundamental / Advance / ...
+                        </div>
+                    </div>
+                </labe>
+            </div>
+            <div class="col-md-3">
+                <label for='com-radio'>
+                    <div class="thumbnail">
+                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub6.png" class="img-responsive">
+                        <div class="caption text-center">
+                             <input type='radio' name='subject' value='computer' id='com-radio'> <strong>COMPUTER</strong>
+                             <br>
+                             C++ / Java / ...
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label for='eng-radio'>
+                    <div class="thumbnail">
+                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub7.png" class="img-responsive">
+                        <div class="caption text-center">
+                             <input type='radio' name='subject' value='english' id='eng-radio'> <strong>ENGLISH</strong>
+                             <br>
+                             Speaking / Writing / ...
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-offset-2 col-md-8'>
+                <table class='table'>
+                    <tr>
+                        <td>Course Name:</td>
+                        <td><input type='text' name='name' class='form-control' placeholder='eg. Fun with Mathematic'></td>
+                    </tr>
+                    <tr>
+                        <td>Description:</td>
+                        <td><textarea rows='5' name='desc' placeholder='very fun course with me, you will learn many things' class='form-control'></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td><input type='date' name='date' class='form-control'></td>
+                    </tr>
+                    <tr>
+                        <td>Price per hour (Baht):</td>
+                        <td><input type='number' name='price' class='form-control'></td>
+                    </tr>
+                    <tr>
+                        <td>Class:</td>
+                        <td>
+                            <select class='form-control' name='class'>
+                                <option value='kindergarden'>Kindergarden</option>
+                                <option value='primary'>Primary School</option>
+                                <option value='secondary'>Secondary School</option>
+                                <option value='university'>University</option>
+                                <option value='activities'>Activities</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Location:</td>
+                        <td>
+                            <input type='checkbox' name='location' value='bts'> BTS Station
+                            <br>
+                            <input type='checkbox' name='location' value='mrt'> MRT Station
+                            <br>
+                            <input type='checkbox' name='location' value='siam'> Siam
+                            <br>
+                            <input type='checkbox' name='location' value='silom'> Silom
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Youtube Video Link:</td>
+                        <td>
+                            <input type='text' name='youtube' class='form-control'>
+                        </td>
+                    </tr>
+                </table>
+                <div class='text-center'>
+                    <button type='submit' class='btn btn-primary btn-lg'>Submit</button>
+                    <button type='reset' class='btn btn-default btn-lg'>Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<% include ../partials/footer %>

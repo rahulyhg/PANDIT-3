@@ -6,6 +6,7 @@
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/main.css"> 
     </header>
 
@@ -29,18 +30,19 @@
 
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Subjects/Place eg. Biology Siam">
+          <input type="text" class="form-control" placeholder="Subjects/Place eg. Biology Siam" name='search'>
         </div>
         <button type="submit" class="btn btn-default">Find!</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="tel:0816852495">CREATE COURSE</a></li>
         <li><a href="tel:0816852495">CALL US</a></li>
         <li><a href="tel:0816852495">REGISTER</a></li>
-        <li><a href="tel:0816852495">LOGIN</a></li>
+        <li><a data-toggle="modal" data-target="#loginModal" style='cursor:pointer;'>LOGIN</a></li>
+        <li><a href="tel:0816852495"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> <span class="badge">42</span></a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">_username <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">CHAT</a></li>
             <li><a href="#">PROFILE</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">LOGOUT</a></li>
@@ -50,3 +52,41 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="loginModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body">
+         <div class='row'>
+           <div class='col-md-6'>
+             <form>
+               <div class='form-group'>
+                 <input type='text' name='email' placeholder='Your Email' class='form-control'>
+               </div>
+               <div class='form-group'>
+                 <input type='password' name='password' placeholder='Your Password' class='form-control'>
+               </div>
+               <div class='form-group'>
+                 <button type='submit' class='form-control'>Login</button>
+               </div>
+             </form>
+           </div>
+           <div class='col-md-6'>
+             <button class='btn btn-facebook'>
+                <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                <span>Register with Facebook</span>
+             </button>
+           </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

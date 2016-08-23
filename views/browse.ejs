@@ -1,0 +1,97 @@
+<% include partials/header %>
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-3'>
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    Filter <span class="glyphicon glyphicon-menu-down pull-right" aria-hidden="true">
+                </li>
+                <li class="list-group-item">
+                    <p>
+                        <strong>Subject:</strong> 
+                        <select>
+                          <option>Thai</option>
+                          <option>English</option>
+                        </select>
+                    </p>
+                    <p>
+                        <strong>Class:</strong> 
+                        <select>
+                          <option>Kindergarden</option>
+                          <option>Primary School</option>
+                          <option>Secondary School</option>
+                          <option>University</option>
+                          <option>Activities</option>
+                        </select>
+                    </p>
+                    <p>
+                      <strong>Price:</strong>  <input type='text' value='0' size='5'> - <input type='text' value='5000' size='5'>
+                    </p>
+                    <p>
+                      <strong>Date:</strong><br> <input type='checkbox'> Monday <input type='checkbox'> Tuesday 
+                      <br><input type='checkbox'> Wednesday <input type='checkbox'> Thrusday 
+                      <br><input type='checkbox'> Friday <input type='checkbox'> Saturday 
+                      <br><input type='checkbox'> Sunday 
+                    </p>
+                    <p>
+                      <strong>Gender:</strong>
+                      <br><input type='radio' name='gender'> Male 
+                      <input type='radio' name='gender'> Female 
+                    </p>
+                    <p>
+                      <strong>Location:</strong>
+                      <br><input type='checkbox'> BTS Station
+                      <br><input type='checkbox'> MRT Station
+                      <br><input type='checkbox'> Siam
+                      <br><input type='checkbox'> Silom
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div class='col-md-9'>
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    <h4 class="list-group-item-heading">Choose your tutor</h4>
+                    <p class="list-group-item-text">
+                        Sort by:
+                        <select class='form-control'> 
+                            <option value='recent'>Recent</option>
+                            <option value='rating'>Rating</option>
+                            <option value='review'>Reviews</option>
+                        </select>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <div class='row'>
+                        <div class='col-md-3'>
+                            <img src='http://placekitten.com/400/500' class='img-responsive'>
+                        </div>
+                        <div class='col-md-9'>
+                            <p><h4>Mathematic by John Mayer</h4>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                            </p>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class='col-md-3'><strong>Rating:</strong><br>
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                    </div>
+                                    <div class='col-md-3'><strong>Price:</strong><br>300 Baht/hr</div>
+                                    <div class='col-md-3'><strong>Class:</strong><br>Kindergarden</div>
+                                    <div class='col-md-3'><strong>Location:</strong><br>Siam</div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<% include partials/footer %>

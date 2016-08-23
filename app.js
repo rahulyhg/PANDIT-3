@@ -10,6 +10,10 @@ var express = require("express"),
     
 //Define Routes
 var indexRoute = require("./routes/index");
+var browseRoute= require("./routes/browse");
+var userRoute = require("./routes/user");
+var chatRoute = require("./routes/chat");
+var courseRoute = require('./routes/course');
 
 //Set and use all modules
 app.set("view engine","ejs");
@@ -20,6 +24,10 @@ app.use(flash());
 
 //Set use routes
 app.use(indexRoute);
+app.use(browseRoute);
+app.use(userRoute);
+app.use(chatRoute);
+app.use(courseRoute);
 
 //Listen Port,IP
 app.listen(process.env.PORT, process.env.IP,function(){

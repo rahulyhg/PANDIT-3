@@ -1,0 +1,105 @@
+<% include ../partials/header %>
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-offset-2 col-md-8'>
+            <div class="panel panel-default">
+                  <div class="panel-body">
+                      <form enctype='multipart/form-data'>
+                        <h2 class='text-center'>Register with us</h2>
+                        <div class='row'>
+                            <div class='col-md-offset-2 col-md-8'>
+                                <div class='col-md-6 text-center'>
+                                    <img src='https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/student.png' class='img-responsive center-block' width=100px;>
+                                    <br><input type='radio' name='type' value='student' checked> I'm a Student.
+                                </div>
+                                <div class='col-md-6 text-center'>
+                                    <img src='https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/scientist.png' class='img-responsive center-block' width=100px;>
+                                    <br><input type='radio' name='type' value='tutor'> I'm a Tutor.
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class='row'>
+                            <div class='col-md-offset-3 col-md-6 text-center'>
+                                <button class='btn btn-facebook'>
+                                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                                    <span>Register with Facebook</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-md-offset-2 col-md-8'>
+                                <br>
+                                <table class='table'>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td><input type='text' class='form-control' placeholder='Your Email Address' name='email'></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password:</td>
+                                        <td><input type='password' class='form-control' placeholder='Your Password' name='password'></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tel:</td>
+                                        <td><input type='text' class='form-control' placeholder='Your Telephone Number' name='tel'></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fullname:</td>
+                                        <td>
+                                                <input type='text' class='form-control' placeholder='Firstname - Surname' name='name'>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Age:</td>
+                                        <td>
+                                            <input type='number' class='form-control' placeholder='Your Age' name='age'>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gender: </td>
+                                        <td>
+                                            <select class='form-control' name='gender'>
+                                                <option value='male'>Male</option>
+                                                <option value='female'>Female</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <hr>
+                                <table class='table'>
+                                    <tr>
+                                        <td colspan="2">
+                                            Your Identity Card:
+                                            <div class='form-group'>
+                                            <input type='file' name='identity'>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Graduated from:
+                                        </td>
+                                        <td>
+                                            <input type='text' class='form-control' name='university'>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            Introduce yourself:
+                                            <textarea rows='4' name='introduce' class='form-control'></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class='text-center'>
+                                    <button type='submit' class='btn btn-primary'>Submit</button> <button type='reset' class='btn btn-default'>Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                      </form>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

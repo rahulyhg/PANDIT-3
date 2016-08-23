@@ -78,8 +78,37 @@ body{
     flex-wrap:wrap;
 }
 
-.thumbnail:hover{
+.thumbnail-subject:hover{
     box-shadow: 5px 5px 5px #888888;
     -webkit-transform: translateY(-8px);
     transform: translateY(-8px);
+}
+
+.badge{
+    background-color:red;
+}
+
+.glyphicon-star, .glyphicon-star-empty{
+    color:orange;
+}
+
+.btn-facebook{
+background:#3A5C99;
+border-color:#3A5C99;
+color:#FFFFFF;
+min-width:250px;
+}
+
+.table>tbody>tr>td{
+    border-top:0px;
+    vertical-align:middle;
+}
+
+label{
+    display:block;
+}
+
+.overf{
+    overflow: auto;
+    height:700px;
 }

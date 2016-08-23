@@ -1,0 +1,38 @@
+<% include partials/header %>
+<div class='container'>
+    <div class='col-md-3'>
+        <ul class="list-group">
+          <li class="list-group-item active">You're talking to</li>
+          <li class="list-group-item">BB King</li>
+          <li class="list-group-item">Eric Clapton</li>
+          <li class="list-group-item">Steve Vai</li>
+          <li class="list-group-item list-group-item-info">John Mayer</li>
+        </ul>
+    </div>
+    <div class='col-md-9'>
+        <div class='well clearfix'>
+            <div class='of'>
+                <p>
+                    <img src='http://placekitten.com/300/300' class='img-circle inline-block' width='50px' height='50px'>
+                    <strong>John Mayer says: </strong> Hi dude!
+                </p>
+                <p class='pull-right'>
+                    <img src='http://placekitten.com/400/500' class='img-circle inline-block' width='50px' height='50px'>
+                    <strong>Dude says: </strong> Hi John!
+                </p>
+            </div>
+                <p>
+                    <form>
+                        <div class='form-group'>
+                            <div class='form-group'>
+                                <input type='text' name='message' class='form-control chat-input' placeholder="Your message here..."> 
+                            </div>
+                                <button type=submit class='btn btn-primary'>Send</button> 
+                                <a class='btn btn-warning'>Share Location</a>
+                        </div>
+                    </form>
+                </p>
+        </div>
+    </div>
+</div>
+<% include partials/footer %>
