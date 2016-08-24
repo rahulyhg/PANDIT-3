@@ -119,8 +119,7 @@ min-width:250px;
     display: flex;   
     flex-flow:row-reverse nowrap;
     text-align: center;
-    align-items: center;
-  justify-content: center;
+    justify-content: center;
 }
 
 .rating-input {
