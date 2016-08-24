@@ -137,6 +137,8 @@
                             <input type='checkbox' name='location' value='siam'> Siam
                             <br>
                             <input type='checkbox' name='location' value='silom'> Silom
+                            <br>
+                            <input type='checkbox' name='location' value='home'> Home Tutor
                         </td>
                     </tr>
                     <tr>
@@ -148,11 +150,31 @@
                 </table>
                 <div class='text-center'>
                     <button type='submit' class='btn btn-primary btn-lg'>Submit</button>
-                    <button type='reset' class='btn btn-default btn-lg'>Reset</button>
+                    <a data-toggle="modal" data-target="#deleteModal" class='btn btn-danger btn-lg'>Delete</a>
                 </div>
             </div>
         </div>
     </form>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete your course</h4>
+      </div>
+      <div class="modal-body">
+         Are you sure?
+      </div>
+      <div class="modal-footer">
+        <form>
+            <button type='submit' class='btn btn-danger'>Delete</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
 </div>
 
 <% include ../partials/footer %>
