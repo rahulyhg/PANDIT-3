@@ -1,7 +1,8 @@
 var express=require("express"),
     router = express.Router(),
     passport=require("passport"),
-    User = require("../models/user");
+    User = require("../models/user"),
+    middleware = require('../middlewares');
     
 
 //define register routes
@@ -9,7 +10,7 @@ router.get("/register",function(req,res){
     res.render("user/register",{header: "Register here!"})
 })
 
-router.get('/profile',function(req,res){
+router.get('/profile',middleware.isLoggedIn,function(req,res){
     res.render("user/profile",{header: "Your Profiles"})
 })
 
@@ -39,7 +40,17 @@ router.post('/registerlocal', passport.authenticate('local-signup', { failureRed
             }
     })
   });
-
+  
+//facebook signup and login
+router.get('/auth/facebook',passport.authenticate('facebook',{scope:'email'}));
+router.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect : '/profile',
+            failureRedirect : '/register',
+            successFlash: true,
+            failureFlash:true
+        }));
+        
 //define post login
 
 //local sign in
@@ -48,5 +59,7 @@ router.post('/login', passport.authenticate('local-login', {
         failureRedirect : '/main',
         failureFlash : true
     }));
+    
+
 
 module.exports=router;

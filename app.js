@@ -2,6 +2,7 @@
 var express = require("express"),
     app = express(),
     bodyParser=require("body-parser"),
+    cookieParser = require('cookie-parser'),
     mongoose = require("mongoose"),
     passport = require("passport"),
     methodOverride = require("method-override"),
@@ -26,6 +27,7 @@ require('./configs/passport')(passport);
 //Set and use all modules
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(cookieParser());
 app.use(express.static(__dirname+"/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
@@ -41,8 +43,9 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+//Define global element
 app.use(function(req,res,next){
+    res.locals.currentUser = req.user;
     res.locals.error= req.flash("error");
     res.locals.success= req.flash("success");
     next();
