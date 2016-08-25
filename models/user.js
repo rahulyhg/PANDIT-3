@@ -21,10 +21,9 @@ var UserSchema = new mongoose.Schema({
         profilepic  :   String,
         idcard      :   String,
         graduate    :   String,
-        introduce   :   String,
-        created     :   {type: Date, default: Date.now}
-    }
-  
+        introduce   :   String
+    },
+    created     :   {type: Date, default: Date.now}
 });
 
 UserSchema.methods.generateHash = function(password) {

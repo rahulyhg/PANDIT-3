@@ -13,56 +13,34 @@ router.get('/profile',function(req,res){
     res.render("user/profile",{header: "Your Profiles"})
 })
 
-// router.post('/register',function(req,res){
-//     // no file upload,chat ,couse ,check type
-//     console.log(req.body);
-//     var newUser=new User({username:req.body.email,
-//         email:req.body.email,
-//         type:req.body.type,
-//         tel:req.body.tel,
-//         fullname:req.body.fullname,
-//         age:req.body.age,
-//         gender:req.body.gender,
-//         graduate:req.body.graduate,
-//         introduce:req.body.introduce
-//     })
-    
-//     User.register(newUser,req.body.password,function(err,user){
-//         if(err){
-//             console.log(err);
-//             // req.flash("error",err.message);
-//             return res.redirect("/register")
-//         }
-//             passport.authenticate('local')(req,res,function(){
-//                 // req.flash("success","Welcome to PANDIT "+user.fullname);
-//                 res.redirect("/main");
-//             })
-//     })
-        
-// })
+//define post signup 
 
-router.post('/registerlocal',function(req,res,next){
-    passport.authenticate('local-signup', function(err,user,info){
+//local
+router.post('/registerlocal', passport.authenticate('local-signup', { failureRedirect: '/register', failureFlash: true }),
+  function(req, res) {
+    var userId = req.user.id;
+    var userProfile = {
+        'profile[email]':req.body.email,
+        'profile.type':req.body.type,
+        'profile.tel':req.body.tel,
+        'profile.fullname':req.body.fullname,
+        'profile.age':req.body.age,
+        'profile.gender':req.body.gender,
+        'profile.graduate':req.body.graduate,
+        'profile.introduce':req.body.introduce
+    }
+    console.log(userId);
+    console.log(userProfile);
+    User.findByIdAndUpdate(userId,userProfile,function(err,newUser){
         if(err){
-            req.flash("error",err);
-            return console.log(err);
+            console.log(err);
+            res.redirect('/register');
+        }else{
+            req.flash('success','Welcome to PANDIT! K. '+req.body.fullname);
+            res.redirect('/main');
         }
-        
-        if(!user){
-            req.flash("error","That email is already taken.");
-            return res.redirect('/register');
-        }
-        
-        req.login(user, loginErr => {
-            if (loginErr) {
-                req.flash("error",loginErr);
-                return console.log(loginErr);
-            }
-            req.flash("success","Welcome dude")
-            return res.redirect('/profile');
-        });      
     })
-})
+  });
 
 
 module.exports=router;

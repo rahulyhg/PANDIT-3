@@ -41,13 +41,12 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// passport.use(new LocalStrategy(User.authenticate()));
 
-
-// app.use(function(req,res,next){
-//     res.locals.error= req.flash("error");
-//     res.locals.success= req.flash("success");
-// });
+app.use(function(req,res,next){
+    res.locals.error= req.flash("error");
+    res.locals.success= req.flash("success");
+    next();
+});
 
 
 //Set use routes
