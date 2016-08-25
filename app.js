@@ -4,7 +4,6 @@ var express = require("express"),
     bodyParser=require("body-parser"),
     mongoose = require("mongoose"),
     passport = require("passport"),
-    LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
     flash = require("connect-flash");
 
@@ -21,6 +20,9 @@ var courseRoute = require('./routes/course');
 //Connect DB mongoose.connect(process.env.DATABASE);
 mongoose.connect('mongodb://localhost/pandit');
 
+// Get passport config
+require('./configs/passport')(passport);
+
 //Set and use all modules
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
@@ -29,25 +31,18 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 
-//Set authentication middleware
+//Set authentication middleware (passport)
 app.use(require("express-session")({
     secret:"PANDIT is good dude",
     resave: false,
     saveUninitialized: false
 }));
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 // passport.use(new LocalStrategy(User.authenticate()));
-passport.use(new LocalStrategy({
-    usernameField:'email',
-    passwordField:'password'
-  },
-User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
 
 // app.use(function(req,res,next){
 //     res.locals.error= req.flash("error");
