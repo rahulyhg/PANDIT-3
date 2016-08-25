@@ -3,6 +3,9 @@ var express=require("express"),
 
 //define landing page routes
 router.get("/",function(req,res){
+    if (req.user){
+        return res.redirect('/main');
+    }
     res.render("landing",{header: "PANDIT"});
 })
 

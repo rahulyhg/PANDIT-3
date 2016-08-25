@@ -12,7 +12,7 @@ var UserSchema = new mongoose.Schema({
         email       :   String,
         name        :   String
     },
-    profile     :{
+
         type        :   String,
         tel         :   String,
         fullname    :   String,
@@ -21,8 +21,8 @@ var UserSchema = new mongoose.Schema({
         profilepic  :   String,
         idcard      :   String,
         graduate    :   String,
-        introduce   :   String
-    },
+        introduce   :   String,
+
     created     :   {type: Date, default: Date.now}
 });
 

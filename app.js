@@ -45,7 +45,10 @@ app.use(passport.session());
 
 //Define global element
 app.use(function(req,res,next){
+    //current user
     res.locals.currentUser = req.user;
+    
+    //flash
     res.locals.error= req.flash("error");
     res.locals.success= req.flash("success");
     next();

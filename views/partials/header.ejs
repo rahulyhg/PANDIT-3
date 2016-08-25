@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img alt="PANDIT Logo" src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/nav.jpg">PANDIT</a>
+      <a class="navbar-brand" href="/main"><img alt="PANDIT Logo" src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/nav.jpg">PANDIT</a>
     </div>
 
      <!--Collect the nav links, forms, and other content for toggling -->
@@ -37,19 +37,27 @@
         <button type="submit" class="btn btn-default">Find!</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="tel:0816852495">CREATE COURSE</a></li>
+        <% if(currentUser && currentUser.type==='tutor'){ %>
+          <li><a href="/course/create">CREATE COURSE</a></li>
+        <% } %>
         <li><a href="tel:0816852495">CALL US</a></li>
-        <li><a href="tel:0816852495">REGISTER</a></li>
-        <li><a data-toggle="modal" data-target="#loginModal" style='cursor:pointer;'>LOGIN</a></li>
-        <li><a href="tel:0816852495"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> <span class="badge">42</span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">_username <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">PROFILE</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">LOGOUT</a></li>
-          </ul>
-        </li>
+        <li><a href="/course">FIND COURSES</a></li>
+        <% if(!currentUser){ %>
+          <li><a href="/register">REGISTER</a></li>
+          <li><a data-toggle="modal" data-target="#loginModal" style='cursor:pointer;'>LOGIN</a></li>
+        <% }else{ %>
+          <li><a href="tel:0816852495"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> <span class="badge">42</span></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <%= currentUser.local.email || currentUser.facebook.name %>
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/profile">PROFILE</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="/logout">LOGOUT</a></li>
+            </ul>
+          </li>
+        <% } %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

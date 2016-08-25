@@ -78,14 +78,13 @@ module.exports = function(passport) {
         User.findOne({'facebook.id':profile.id},function(err,user){
             if (err) return done(err);
             if(user){
-                return done(null,user,{message:'Welcome back! '+ profile.displayName});
+                return done(null,user,{message:'Welcome back!'});
                 
             }else{
                 var newUser = new User();
-                console.log(profile);
                 newUser.facebook.id    = profile.id;
                 newUser.facebook.token = token;           
-                newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName || profile.displayName; 
+                newUser.facebook.name  = profile.displayName; 
             
                 newUser.save(function(err){
                     if(err) throw err;

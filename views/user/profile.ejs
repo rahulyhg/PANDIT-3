@@ -4,11 +4,11 @@
         <div class='col-md-offset-2 col-md-8'>
             <div class="panel panel-default">
                   <div class="panel-body">
-                      <form enctype='multipart/form-data'>
+                      <form enctype='multipart/form-data' action='/profile?_method=PUT' method='post'>
                         <h2 class='text-center'>John Mayer profile</h2>
                         <div class='row'>
                             <div class='col-md-offset-2 col-md-8'>
-                                <img src='http://placekitten.com/500/500' class='img-responsive img-circle center-block' width='300px'>
+                                <img src='/uploads/<% if(data.profilepic){ %><%= data.profilepic %><% }else{ %>kitten.jpg<%}%>' class='img-responsive img-circle center-block' width='300px'>
                                 <br>
                                 Upload your profile picture:
                                 <input type='file' name='profilepic'>
@@ -20,34 +20,43 @@
                                 <table class='table'>
                                     <tr>
                                         <td>Email:</td>
-                                        <td><input type='text' class='form-control' placeholder='Your Email Address' name='email'></td>
+                                        <td><input type='text' class='form-control' placeholder='Your Email Address' name='email' value='<%= data.local.email %>'></td>
                                     </tr>
                                     <tr>
                                         <td>Password:</td>
-                                        <td><input type='password' class='form-control' placeholder='Your Password' name='password'></td>
+                                        <td><input type='password' class='form-control' placeholder='Enter your new password (If you want)' name='password'></td>
                                     </tr>
                                     <tr>
                                         <td>Tel:</td>
-                                        <td><input type='text' class='form-control' placeholder='Your Telephone Number' name='tel'></td>
+                                        <td><input type='text' class='form-control' placeholder='Your Telephone Number' name='tel' value='<%= data.tel %>'></td>
                                     </tr>
                                     <tr>
                                         <td>Fullname:</td>
                                         <td>
-                                                <input type='text' class='form-control' placeholder='Firstname - Surname' name='name'>
+                                                <input type='text' class='form-control' placeholder='Firstname - Surname' name='name' value='<%= data.fullname %>'>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Age:</td>
                                         <td>
-                                            <input type='number' class='form-control' placeholder='Your Age' name='age'>
+                                            <input type='number' class='form-control' placeholder='Your Age' name='age' value='<%= data.age %>'>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Gender: </td>
                                         <td>
                                             <select class='form-control' name='gender'>
-                                                <option value='male'>Male</option>
-                                                <option value='female'>Female</option>
+                                                <option value='male' <%= data.gender=='male' ? 'selected' : '' %>>Male</option>
+                                                <option value='female' <%= data.gender=='female' ? 'selected' : '' %>>Female</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>You are: </td>
+                                        <td>
+                                            <select class='form-control' name='type'>
+                                                <option value='student' <%= data.type=='student' ? 'selected' : '' %>>Student</option>
+                                                <option value='tutor' <%= data.type=='tutor' ? 'selected' : '' %>>Tutor</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -58,7 +67,7 @@
                                         <td colspan="2">
                                             Your Identity Card:
                                             <div class='form-group'>
-                                            <input type='file' name='identity'>
+                                            <input type='file' name='idcard'>
                                             </div>
                                         </td>
                                     </tr>
@@ -67,13 +76,13 @@
                                             Graduated from:
                                         </td>
                                         <td>
-                                            <input type='text' class='form-control' name='university'>
+                                            <input type='text' class='form-control' name='university' value=<%=data.graduate%>>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
                                             Introduce yourself:
-                                            <textarea rows='4' name='introduce' class='form-control'></textarea>
+                                            <textarea rows='4' name='introduce' class='form-control'><%=data.introduce%></textarea>
                                         </td>
                                     </tr>
                                 </table>
