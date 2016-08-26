@@ -3,6 +3,7 @@ var express=require("express"),
     passport=require("passport"),
     multer = require('multer'),
     upload = multer({dest:'./public/uploads'}),
+    fs = require('fs'),
     User = require("../models/user"),
     middleware = require('../middlewares');
     
@@ -21,9 +22,11 @@ router.get('/profile',middleware.isLoggedIn,function(req,res){
 //define put profile
 var files = upload.fields([{ name: 'profilepic', maxCount: 1 }, { name: 'idcard', maxCount: 1 }])
 router.put('/profile',middleware.isLoggedIn,files,function(req,res){
+    
+    //Profile
     var userId = req.user.id;
     var userProfile = {
-        'email':req.body.email,
+        'local.email':req.body.email,
         'type':req.body.type,
         'tel':req.body.tel,
         'fullname':req.body.fullname,
@@ -34,8 +37,65 @@ router.put('/profile',middleware.isLoggedIn,files,function(req,res){
     }
     
     if(req.body.password!=''){
-        userProfile.password=req.body.password;
+        var passwordHash = new User()
+        userProfile['local.password']=passwordHash.generateHash(req.body.password);
     }
+    
+    //File Upload
+    
+        //checking file type for profilepic
+        var profilepic={};
+        var profileNew='';
+        if (req.files['profilepic']){
+            profilepic=req.files['profilepic'][0];
+            
+            if (profilepic.mimetype=="image/png"){
+                profileNew=profilepic.filename+'.png';
+                
+            }else if (profilepic.mimetype=='image/jpeg'){
+			    profileNew =profilepic.filename+'.jpg';
+			    
+		    }else{
+		        fs.unlink('./public/uploads/'+profilepic.filename,err=>{
+		            if(err) throw err;
+		            req.flash('error','Error Profile Picture File Type.')
+			        res.redirect('/profile');
+			        return;
+		        })
+		        return;
+			    
+		    }
+		    fs.rename("./public/uploads/"+profilepic.filename,"./public/uploads/profilepic_"+profileNew);
+		    userProfile.profilepic='profilepic_'+profileNew;
+        }
+        
+        //checking file type for id card
+        var idcardpic={};
+        var idcardNew='';
+        if (req.files['idcard']){
+            idcardpic=req.files['idcard'][0];
+            
+            if (idcardpic.mimetype=="image/png"){
+                idcardNew=idcardpic.filename+'.png';
+                
+            }else if (idcardpic.mimetype=='image/jpeg'){
+			    idcardNew =idcardpic.filename+'.jpg';
+			    
+		    }else{
+		        fs.unlink('./public/uploads/'+idcardpic.filename,err=>{
+		            if(err) throw err;
+		            req.flash('error','Error Identity Card Picture File Type.')
+			        res.redirect('/idcard');
+			        return;
+		        })
+		        return;
+			    
+		    }
+		    fs.rename("./public/uploads/"+idcardpic.filename,"./public/uploads/idcardpic_"+idcardNew);
+		    userProfile.idcard='idcardpic_'+idcardNew;
+        }
+        
+        
     
     User.findByIdAndUpdate(userId,userProfile,function(err,newUser){
             if(err){
@@ -47,7 +107,8 @@ router.put('/profile',middleware.isLoggedIn,files,function(req,res){
                 res.redirect('/profile');
             }
     
-    res.redirect('/main');
+
+    })
 })
 
 
@@ -93,7 +154,7 @@ router.get('/auth/facebook/callback',
 
 //local sign in
 router.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/user',
+        successRedirect : '/profile',
         failureRedirect : '/main',
         failureFlash : true
     }));
