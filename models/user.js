@@ -23,7 +23,11 @@ var UserSchema = new mongoose.Schema({
         graduate    :   String,
         introduce   :   String,
 
-    created     :   {type: Date, default: Date.now}
+    created     :   {type: Date, default: Date.now},
+    course      :   [{
+                        type:mongoose.Schema.Types.ObjectId,
+                        ref: "Course"
+                    }]
 });
 
 UserSchema.methods.generateHash = function(password) {
