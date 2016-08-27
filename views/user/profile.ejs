@@ -5,10 +5,10 @@
             <div class="panel panel-default">
                   <div class="panel-body">
                       <form enctype='multipart/form-data' action='/profile?_method=PUT' method='post'>
-                        <h2 class='text-center'>John Mayer profile</h2>
+                        <h2 class='text-center'><%= data.fullname || data.facebook.name %> profile</h2>
                         <div class='row'>
                             <div class='col-md-offset-2 col-md-8'>
-                                <img src='/uploads/<% if(data.profilepic){ %><%= data.profilepic %><% }else{ %>kitten.jpg<%}%>' class='img-responsive img-circle center-block' width='300px'>
+                                <img src=<% if(data.profilepic){ %>'/uploads/<%= data.profilepic %>'<% }else if(data.facebook.profilepic){ %>'<%=data.facebook.profilepic%>'<% }else{ %>'/uploads/kitten.jpg'<%}%>' class='img-responsive img-circle center-block' width='200px'>
                                 <br>
                                 Upload your profile picture:
                                 <input type='file' name='profilepic'>

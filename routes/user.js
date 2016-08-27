@@ -155,7 +155,7 @@ router.get('/auth/facebook/callback',
 //local sign in
 router.post('/login', passport.authenticate('local-login', {
         successRedirect : '/profile',
-        failureRedirect : '/main',
+        failureRedirect : '/',
         failureFlash : true
     }));
     
@@ -163,7 +163,7 @@ router.post('/login', passport.authenticate('local-login', {
 router.get('/logout',function(req,res){
     req.logout();
     req.flash('success','You have been logged out.')
-    res.redirect('/main');
+    res.redirect('/');
 })
     
 
