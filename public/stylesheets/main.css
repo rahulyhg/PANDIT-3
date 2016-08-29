@@ -11,6 +11,7 @@ body{
     font-weight: lighter
 }
 
+/*navbar --------------------------------------*/
 .navbar-default .navbar-toggle .icon-bar {
     background-color: white;
 }
@@ -130,7 +131,6 @@ min-width:250px;
 .rating-star:before{
     color:orange;
     content: "\e007";
-
     position: relative;
     top: 1px;
     font-family: 'Glyphicons Halflings';

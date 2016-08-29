@@ -96,7 +96,6 @@ router.put('/profile',middleware.isLoggedIn,files,function(req,res){
         }
         
         
-    
     User.findByIdAndUpdate(userId,userProfile,function(err,newUser){
             if(err){
                 console.log(err);
@@ -118,27 +117,27 @@ router.put('/profile',middleware.isLoggedIn,files,function(req,res){
 //local signup
 router.post('/registerlocal', passport.authenticate('local-signup', { failureRedirect: '/register', failureFlash: true })
     ,function(req, res) {
-        var userId = req.user.id;
-        var userProfile = {
-            'email':req.body.email,
-            'type':req.body.type,
-            'tel':req.body.tel,
-            'fullname':req.body.fullname,
-            'age':req.body.age,
-            'gender':req.body.gender,
-            'graduate':req.body.graduate,
-            'introduce':req.body.introduce
+    var userId = req.user.id;
+    var userProfile = {
+        'email':req.body.email,
+        'type':req.body.type,
+        'tel':req.body.tel,
+        'fullname':req.body.fullname,
+        'age':req.body.age,
+        'gender':req.body.gender,
+        'graduate':req.body.graduate,
+        'introduce':req.body.introduce
+    }
+    User.findByIdAndUpdate(userId,userProfile,function(err,newUser){
+        if(err){
+            console.log(err);
+            res.redirect('/register');
+        }else{
+            req.flash('success','Welcome to PANDIT! K. '+req.body.fullname);
+            res.redirect('/course');
         }
-        User.findByIdAndUpdate(userId,userProfile,function(err,newUser){
-            if(err){
-                console.log(err);
-                res.redirect('/register');
-            }else{
-                req.flash('success','Welcome to PANDIT! K. '+req.body.fullname);
-                res.redirect('/course');
-            }
     })
-  });
+});
   
 //facebook signup and login
 router.get('/auth/facebook',passport.authenticate('facebook',{scope:'email'}));
@@ -149,6 +148,7 @@ router.get('/auth/facebook/callback',
             successFlash:true,
             failureFlash:true
         }));
+        
         
 //define post login
 

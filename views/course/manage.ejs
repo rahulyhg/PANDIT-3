@@ -1,0 +1,29 @@
+<% include ../partials/header %>
+<div class='container'>
+    <div class='col-md-12'>
+        <% data.course.forEach(function(x){ %>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class='col-md-3'>
+                    <img src='https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/<%= mappingObject.subjectMap[x.subject] %>' class='img-responsive'>
+                </div>
+                
+                <div class='col-md-9'>
+                    <p>
+                        <div class='pull-right'>
+                            <form action='/course/<%= x._id %>?_method=DELETE' method='post'><a class='btn btn-primary' href='/course/<%= x._id %>/edit'>Edit</a> <button class='btn btn-danger'>Delete</button></form>
+                        </div>
+                        <h4><%= x.name %></h4>
+                        <%= x.desc %>
+                    </p>
+                    <div class='col-md-3 col-sm-6'><strong>Date:</strong><br><% x.date.forEach(function(y){%><%= mappingObject.dateMap[y] %> <% })%></div>
+                    <div class='col-md-3 col-sm-6 '><strong>Price:</strong><br><%= x.price %> Baht/hr</div>
+                    <div class='col-md-3 col-sm-6'><strong>Class:</strong><br><%= x.level %></div>
+                    <div class='col-md-3 col-sm-6'><strong>Location:</strong><br><% x.location.forEach(function(z){ %><%= mappingObject.locationMap[z] %> <%})%></div>
+                </div>
+              </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+<% include ../partials/footer %>

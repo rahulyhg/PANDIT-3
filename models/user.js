@@ -13,17 +13,16 @@ var UserSchema = new mongoose.Schema({
         name        :   String,
         profilepic  :   String
     },
-
-        type        :   String,
-        tel         :   String,
-        fullname    :   String,
-        age         :   Number,
-        gender      :   String,
-        profilepic  :   String,
-        idcard      :   String,
-        graduate    :   String,
-        introduce   :   String,
-
+    
+    type        :   String,
+    tel         :   String,
+    fullname    :   String,
+    age         :   Number,
+    gender      :   String,
+    profilepic  :   String,
+    idcard      :   String,
+    graduate    :   String,
+    introduce   :   String,
     created     :   {type: Date, default: Date.now},
     course      :   [{
                         type:mongoose.Schema.Types.ObjectId,

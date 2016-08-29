@@ -8,8 +8,6 @@ var express = require("express"),
     methodOverride = require("method-override"),
     flash = require("connect-flash");
 
-//Load Database model
-var User = require('./models/user');
 
 //Define Routes
 var indexRoute = require("./routes/index");

@@ -5,93 +5,12 @@
             <h1>Edit your own course</h1>
         </div>
     </div>
-    <div class='row'>
-        <h2>Choose the subject</h2>
-        <hr>
-    </div>
-    <form>
-        <div class="row">
-            <div class="col-md-3">
-                <label for='gat-radio'>
-                    <div class="thumbnail">
-                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub1.png" class="img-responsive">
-                        <div class="caption text-center">
-                            <input type='radio' name='subject' value='gat' id='gat-radio'> <strong>GAT</strong>
-                            <br> 
-                            General Aptitude Test
-                        </div>
-                    </div>
-                </label>
-            </div>
-            <div class="col-md-3">
-                <label for='art-radio'>
-                    <div class="thumbnail">
-                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub2.png" class="img-responsive">
-                        <div class="caption text-center">
-                             <input type='radio' name='subject' value='art' id='art-radio'> <strong>ART</strong>
-                             <br>
-                             Music / Painting / ...
-                        </div>
-                    </div>
-                </label>
-            </div>
-            <div class="col-md-3">
-                <label for='bio-radio'>
-                    <div class="thumbnail">
-                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub3.png" class="img-responsive">
-                        <div class="caption text-center">
-                             <input type='radio' name='subject' value='bio' id='bio-radio'> <strong>BIOLOGY</strong>
-                             <br>
-                             Metabolism / Body / ...
-                        </div>
-                    </div>
-                </label>
-            </div>
-            <div class="col-md-3">
-                <label for='chem-radio'>
-                    <div class="thumbnail">
-                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub4.png" class="img-responsive">
-                        <div class="caption text-center">
-                             <input type='radio' name='subject' value='chemistry' id='chem-radio'> <strong>CHEMISTRY</strong>
-                             <br>
-                             Elements / Molecule / ...
-                        </div>
-                    </div>
-                </label>
-            </div>
-            <div class="col-md-3">
-                <label for='chin-radio'>
-                    <div class="thumbnail">
-                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub5.png" class="img-responsive">
-                        <div class="caption text-center">
-                             <input type='radio' name='subject' value='chinese' id='chin-radio'> <strong>CHINESE</strong>
-                             <br>
-                             Fundamental / Advance / ...
-                        </div>
-                    </div>
-                </labe>
-            </div>
-            <div class="col-md-3">
-                <label for='com-radio'>
-                    <div class="thumbnail">
-                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub6.png" class="img-responsive">
-                        <div class="caption text-center">
-                             <input type='radio' name='subject' value='computer' id='com-radio'> <strong>COMPUTER</strong>
-                             <br>
-                             C++ / Java / ...
-                        </div>
-                    </div>
-                </label>
-            </div>
-            <div class="col-md-3">
+
+    <form method='post' action='/course/<%= data._id %>?_method=PUT'>
+            <div class="col-md-offset-4 col-md-4">
                 <label for='eng-radio'>
                     <div class="thumbnail">
-                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub7.png" class="img-responsive">
-                        <div class="caption text-center">
-                             <input type='radio' name='subject' value='english' id='eng-radio'> <strong>ENGLISH</strong>
-                             <br>
-                             Speaking / Writing / ...
-                        </div>
+                        <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/<%=  mappingObject.subjectMap[data.subject] %>" class="img-responsive">
                     </div>
                 </label>
             </div>
@@ -101,83 +20,63 @@
                 <table class='table'>
                     <tr>
                         <td>Course Name:</td>
-                        <td><input type='text' name='name' class='form-control' placeholder='eg. Fun with Mathematic'></td>
+                        <td><input type='text' name='name' class='form-control' placeholder='eg. Fun with Mathematic' value='<%= data.name %>'></td>
                     </tr>
                     <tr>
                         <td>Description:</td>
-                        <td><textarea rows='5' name='desc' placeholder='very fun course with me, you will learn many things' class='form-control'></textarea></td>
+                        <td><textarea rows='5' name='desc' placeholder='very fun course with me, you will learn many things' class='form-control'><%= data.desc %></textarea></td>
                     </tr>
                     <tr>
                         <td>Date:</td>
-                        <td><input type='checkbox' name='date' value='mon'> Monday <input type='checkbox' name='date' value='tue'> Tuesday 
-                      <br><input type='checkbox' name='date' value='wed'> Wednesday <input type='checkbox' name='date' value='thu'> Thrusday 
-                      <br><input type='checkbox' name='date' value='fri'> Friday <input type='checkbox' name='date' value='sat'> Saturday 
-                      <br><input type='checkbox' name='date' value='sun'> Sunday </td>
+                        <td><input type='checkbox' name='date' value='mon' <%= data.date.indexOf('mon')!=-1 ? 'checked' : '' %>> Monday 
+                        <input type='checkbox' name='date' value='tue' <%= data.date.indexOf('tue')!=-1 ? 'checked' : '' %>> Tuesday 
+                      <br><input type='checkbox' name='date' value='wed' <%= data.date.indexOf('wed')!=-1 ? 'checked' : '' %>> Wednesday 
+                      <input type='checkbox' name='date' value='thu' <%= data.date.indexOf('thu')!=-1 ? 'checked' : '' %>> Thrusday 
+                      <br><input type='checkbox' name='date' value='fri' <%= data.date.indexOf('fri')!=-1 ? 'checked' : '' %>> Friday 
+                      <input type='checkbox' name='date' value='sat' <%= data.date.indexOf('sat')!=-1 ? 'checked' : '' %>> Saturday 
+                      <br><input type='checkbox' name='date' value='sun' <%= data.date.indexOf('sun')!=-1 ? 'checked' : '' %>> Sunday </td>
                     </tr>
                     <tr>
                         <td>Price per hour (Baht):</td>
-                        <td><input type='number' name='price' class='form-control'></td>
+                        <td><input type='number' name='price' class='form-control' value='<%= data.price %>'></td>
                     </tr>
                     <tr>
                         <td>Class:</td>
                         <td>
                             <select class='form-control' name='class'>
-                                <option value='kindergarden'>Kindergarden</option>
-                                <option value='primary'>Primary School</option>
-                                <option value='secondary'>Secondary School</option>
-                                <option value='university'>University</option>
-                                <option value='activities'>Activities</option>
+                                <option value='kindergarden' <%= data.level=='kindergarden' ? 'selected' : '' %>>Kindergarden</option>
+                                <option value='primary' <%= data.level=='primary' ? 'selected' : '' %>>Primary School</option>
+                                <option value='secondary' <%= data.level=='secondary' ? 'selected' : '' %>>Secondary School</option>
+                                <option value='university' <%= data.level=='university' ? 'selected' : '' %>>University</option>
+                                <option value='activities' <%= data.level=='activities' ? 'selected' : '' %>>Activities</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td>Location:</td>
                         <td>
-                            <input type='checkbox' name='location' value='bts'> BTS Station
+                            <input type='checkbox' name='location' value='bts' <%= data.location.indexOf('bts')!=-1 ? 'checked' : '' %>> BTS Station
                             <br>
-                            <input type='checkbox' name='location' value='mrt'> MRT Station
+                            <input type='checkbox' name='location' value='mrt' <%= data.location.indexOf('mrt')!=-1 ? 'checked' : '' %>> MRT Station
                             <br>
-                            <input type='checkbox' name='location' value='siam'> Siam
+                            <input type='checkbox' name='location' value='siam' <%= data.location.indexOf('siam')!=-1 ? 'checked' : '' %>> Siam
                             <br>
-                            <input type='checkbox' name='location' value='silom'> Silom
+                            <input type='checkbox' name='location' value='silom' <%= data.location.indexOf('silom')!=-1 ? 'checked' : '' %>> Silom
                             <br>
-                            <input type='checkbox' name='location' value='home'> Home Tutor
+                            <input type='checkbox' name='location' value='home' <%= data.location.indexOf('home')!=-1 ? 'checked' : '' %>> Home Tutor
                         </td>
                     </tr>
                     <tr>
                         <td>Youtube Video Link:</td>
                         <td>
-                            <input type='text' name='youtube' class='form-control'>
+                            <input type='text' name='youtube' class='form-control' value='<%= data.video %>'>
                         </td>
                     </tr>
                 </table>
                 <div class='text-center'>
                     <button type='submit' class='btn btn-primary btn-lg'>Submit</button>
-                    <a data-toggle="modal" data-target="#deleteModal" class='btn btn-danger btn-lg'>Delete</a>
                 </div>
             </div>
         </div>
     </form>
 </div>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Delete your course</h4>
-      </div>
-      <div class="modal-body">
-         Are you sure?
-      </div>
-      <div class="modal-footer">
-        <form>
-            <button type='submit' class='btn btn-danger'>Delete</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </form>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
-
-<% include ../partials/footer %>
