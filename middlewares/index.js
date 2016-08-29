@@ -18,7 +18,7 @@ middlewareObject.isTutor=function(req,res,next){
 }
 
 middlewareObject.checkCourseOwnership=function(req,res,next){
-    Course.findById(req.params.id,function(err,foundCourse){
+    Course.findById(req.params.course_id,function(err,foundCourse){
         if (err) throw err;
         if (foundCourse.tutor.id.equals(req.user._id)){
             next();

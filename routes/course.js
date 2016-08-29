@@ -49,8 +49,8 @@ router.get('/course/manage',middleware.isLoggedIn,middleware.isTutor,function(re
     })
 })
 
-router.delete('/course/:id/',middleware.isLoggedIn,middleware.checkCourseOwnership,function(req,res){
-    var courseId=req.params.id;
+router.delete('/course/:course_id/',middleware.isLoggedIn,middleware.checkCourseOwnership,function(req,res){
+    var courseId=req.params.course_id;
     Course.findByIdAndRemove(courseId,function(err){
         if(err) throw err;
         req.flash('success','Successfully deleted your course');
@@ -58,16 +58,16 @@ router.delete('/course/:id/',middleware.isLoggedIn,middleware.checkCourseOwnersh
     })
 })
 
-router.get('/course/:id/edit',middleware.isLoggedIn,middleware.checkCourseOwnership,function(req,res){
-     var courseId=req.params.id;
+router.get('/course/:course_id/edit',middleware.isLoggedIn,middleware.checkCourseOwnership,function(req,res){
+     var courseId=req.params.course_id;
      Course.findById(courseId,function(err,course){
          if (err) throw err;
          res.render('course/edit',{header:'Edit your course',data:course,mappingObject:mappingObject});
      })
 })
 
-router.put('/course/:id',middleware.isLoggedIn,middleware.checkCourseOwnership,function(req,res){
-    var courseId=req.params.id;
+router.put('/course/:course_id',middleware.isLoggedIn,middleware.checkCourseOwnership,function(req,res){
+    var courseId=req.params.course_id;
     var courseData={
         name    :   req.body.name,
         desc    :   req.body.desc,
@@ -84,13 +84,31 @@ router.put('/course/:id',middleware.isLoggedIn,middleware.checkCourseOwnership,f
     })
 })
 
+// //define comment route
+// router.post('/course/:id',function(req,res){
+    
+// })
+
 //define browsing course route
 router.get("/course",function(req,res){
     res.render("course/browse",{header: "Choose subject and location here"})
 })
 
 router.get('/course/:course_id',function(req,res){
-    res.render("course/show",{header: "Sub"});
+    var courseId=req.params.course_id;
+
+    Course.findById(courseId,function(err,course){
+        if(err) throw err;
+        var tutorId=course.tutor.id;
+        User.findById(tutorId,function(err,user){
+            if (err) throw err;
+            var youtubeId='';
+            if(course.video){
+                youtubeId = course.video.substring(course.video.search('v=')+2,course.video.search('v=')+13);
+            }
+            res.render("course/show",{header: course.name+' by '+course.tutor.name, data:course,mappingObject:mappingObject,user:user,youtube:youtubeId});
+        })
+    })
 })
 
 module.exports=router;

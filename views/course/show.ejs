@@ -5,7 +5,7 @@
                     <div class='col-md-4'>
                         <div class="panel panel-default">
                             <div class="panel-body text-center">
-                                <img src='https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub1.png' class='img-responsive'>
+                                <img src='https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/<%= mappingObject.subjectMap[data.subject] %>' class='img-responsive'>
                                 <h3>Rating: </h3>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
@@ -16,9 +16,9 @@
                         </div>
                     </div>
                     <div class='col-md-8'>
-                        <h1>Mathematic</h1>
-                        <h3>by John Mayers</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                        <h1><%= data.name %></h1>
+                        <h3>by <%= data.tutor.name %></h3>
+                        <p></p><%= data.desc %></p>
                             <a class='btn btn-default btn-lg btn-success'>Chat with the tutor</a>
                             <a class='btn btn-default btn-lg btn-primary' href='#review'>Write a review</a>
                     </div>
@@ -28,20 +28,22 @@
                     <div class="panel-body">
                         <div class='row'>
                             <div class='col-md-3 col-sm-6'><strong>Date:</strong><br>
-                                    Mon, Tues, Wed
+                                    <% data.date.forEach(function(y){%><%= mappingObject.dateMap[y] %> <% })%>
                             </div>
-                            <div class='col-md-3 col-sm-6 '><strong>Price:</strong><br>300 Baht/hr</div>
-                            <div class='col-md-3 col-sm-6'><strong>Class:</strong><br>Kindergarden</div>
-                            <div class='col-md-3 col-sm-6'><strong>Location:</strong><br>Siam</div>
+                            <div class='col-md-3 col-sm-6 '><strong>Price:</strong><br><%= data.price %> Baht/hr</div>
+                            <div class='col-md-3 col-sm-6'><strong>Class:</strong><br><%= data.level %></div>
+                            <div class='col-md-3 col-sm-6'><strong>Location:</strong><br><% data.location.forEach(function(z){ %><%= mappingObject.locationMap[z] %> <%})%></div>
                         </div>
-                        <div class='row'>
-                            <div class='col-md-12'>
-                                <hr>
-                                <div class="embed-responsive embed-responsive-16by9">
-                                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/htlGcGTHBb4"></iframe>
+                        <% if (youtube.length>1){ %>
+                            <div class='row'>
+                                <div class='col-md-12'>
+                                    <hr>
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= youtube %>"></iframe>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <% } %>
                         <div class='row'>
                             <div class='col-md-12'>
                             <h2>Tutor Profiles</h2>
@@ -49,25 +51,25 @@
                         </div>
                         <div class='row'>
                             <div class='col-md-4'>
-                                <img src='http://placekitten.com/400/400' class='img-responsive img-circle'>
+                                <img src=<% if(user.profilepic){ %>'/uploads/<%= user.profilepic %>'<% }else if(user.facebook.profilepic){ %>'<%=user.facebook.profilepic%>'<% }else{ %>'/uploads/kitten.jpg'<%}%>' class='img-responsive img-circle' width='200px'>
                             </div>
                             <div class='col-md-8'>
                                 <table class='table'>
                                     <tr>
                                         <td><strong>Name:</strong></td>
-                                        <td>John Mayer</td>
+                                        <td><%= user.local.fullname || user.facebook.name %></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Graduated from:</strong></td>
-                                        <td>Chulalongkorn University</td>
+                                        <td><%= user.graduate %></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Age:</strong></td>
-                                        <td>23</td>
+                                        <td><%= user.age %></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Introduction:</strong></td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                                        <td><%= user.introduce %></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Number of reviews:</strong></td>
