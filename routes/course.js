@@ -2,6 +2,7 @@ var express=require("express"),
     router = express.Router(),
     Course = require('../models/course'),
     User = require('../models/user'),
+    Comment = require('../models/comment'),
     middleware = require('../middlewares'),
     mappingObject = require('../configs/mapping');
     
@@ -16,7 +17,7 @@ router.get('/course/create',middleware.isLoggedIn,middleware.isTutor,function(re
 router.post('/course',middleware.isLoggedIn,middleware.isTutor,function(req,res){
     var userId = req.user._id
     var courseData={
-        'tutor.name'  :   req.user.local.email || req.user.facebook.name,
+        'tutor.name'  :   req.user.local.fullname || req.user.facebook.name,
         'tutor.id'    :   userId,
         subject :   req.body.subject,
         name    :   req.body.name,
@@ -84,10 +85,37 @@ router.put('/course/:course_id',middleware.isLoggedIn,middleware.checkCourseOwne
     })
 })
 
-// //define comment route
-// router.post('/course/:id',function(req,res){
-    
-// })
+//define comment route
+router.post('/course/:course_id/comment',middleware.isLoggedIn,function(req,res){
+    var userId=req.user._id;
+    var courseId=req.params.course_id;
+    var commentData={
+        'student.id':userId,
+        'student.name':req.user.local.fullname || req.user.facebook.name,
+        rating:req.body.ratinginput,
+        content:req.body.review
+    }
+    Comment.create(commentData,function(err,comment){
+        if (err) throw err;
+        Course.findById(courseId).populate('comment').exec(function(err,course){
+            if(err)throw err;
+            course.comment.push(comment);
+            
+            //calculate course rating
+            var sum = 0;
+            course.comment.forEach(function(indComment){
+                sum+=indComment.rating;
+            })
+            course.rating=sum/course.comment.length;
+            
+            course.save(function(err,data){
+                if(err) throw err;
+                req.flash('success','Successfully added a comment');
+                res.redirect('/course/'+courseId);
+            })
+        })
+    })
+})
 
 //define browsing course route
 router.get("/course",function(req,res){
@@ -97,7 +125,7 @@ router.get("/course",function(req,res){
 router.get('/course/:course_id',function(req,res){
     var courseId=req.params.course_id;
 
-    Course.findById(courseId,function(err,course){
+    Course.findById(courseId).populate('comment').exec(function(err,course){
         if(err) throw err;
         var tutorId=course.tutor.id;
         User.findById(tutorId,function(err,user){
@@ -106,7 +134,12 @@ router.get('/course/:course_id',function(req,res){
             if(course.video){
                 youtubeId = course.video.substring(course.video.search('v=')+2,course.video.search('v=')+13);
             }
-            res.render("course/show",{header: course.name+' by '+course.tutor.name, data:course,mappingObject:mappingObject,user:user,youtube:youtubeId});
+            res.render("course/show",{header: course.name+' by '+course.tutor.name,
+            data:course,
+            user:user,
+            youtube:youtubeId,
+            mappingObject:mappingObject
+            });
         })
     })
 })
