@@ -88,6 +88,7 @@ body{
     transform: scale(1.2);
     transition: .3s;
     -webkit-filter: blur(0px);
+    cursor:pointer;
 }
 
 .badge{
@@ -161,4 +162,10 @@ min-width:250px;
 
 .browse-star{
     font-size: 15px;
+}
+
+.browse:hover{
+    cursor:pointer;
+    background-color: #e6f2ff;
+    transition: 1s;
 }

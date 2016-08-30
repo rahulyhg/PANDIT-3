@@ -62,34 +62,36 @@
                         </select>
                     </p>
                 </li>
-                <li class="list-group-item">
-                    <div class='row'>
-                        <div class='col-md-3'>
-                            <img src='http://placekitten.com/400/500' class='img-responsive'>
-                        </div>
-                        <div class='col-md-9'>
-                            <p><h4>Mathematic by John Mayer</h4>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            </p>
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class='col-md-3 col-sm-6'><strong>Rating:</strong><br>
-                                        <span class="glyphicon glyphicon-star browse-star" aria-hidden="true"></span>
-                                        <span class="glyphicon glyphicon-star browse-star" aria-hidden="true"></span>
-                                        <span class="glyphicon glyphicon-star browse-star" aria-hidden="true"></span>
-                                        <span class="glyphicon glyphicon-star browse-star" aria-hidden="true"></span>
-                                        <span class="glyphicon glyphicon-star-empty browse-star" aria-hidden="true"></span>
-                                    </div>
-                                    <div class='col-md-3 col-sm-6'><strong>Price:</strong><br>300 Baht/hr</div>
-                                    <div class='col-md-3 col-sm-6'><strong>Class:</strong><br>Kindergarden</div>
-                                    <div class='col-md-3 col-sm-6'><strong>Location:</strong><br>Siam</div>
+            </ul>
+                <% data.forEach(function(x){ %>
+                        <div class="panel panel-default browse" onclick="window.location='/course/<%= x.id%>'">
+                            <div class="panel-body">
+                                <div class='row'>
+                                        <div class='col-md-3'>
+                                            <img src=<% if(x.tutor.id.profilepic){ %>'/uploads/<%= x.tutor.id.profilepic %>'<% }else if(x.tutor.id.facebook.profilepic){ %>'<%=x.tutor.id.facebook.profilepic%>'<% }else{ %>'/uploads/kitten.jpg'<%}%>' class='img-responsive img-circle'>
+                                        </div>
+                                        <div class='col-md-9'>
+                                            <p><h3><%= x.name %></h3>
+                                            <%= x.desc %>
+                                            </p>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class='col-md-3 col-sm-6'><strong>Rating:</strong><br>
+                                                        <% for(var i = 0;i<x.rating;i++) {%>
+                                                        <span class="glyphicon glyphicon-star browse-star" aria-hidden="true"></span>
+                                                        <% } %>
+                                                    </div>
+                                                    <div class='col-md-3 col-sm-6'><strong>Price:</strong><br><%= x.price %> Baht/hr</div>
+                                                    <div class='col-md-3 col-sm-6'><strong>Class:</strong><br><%= x.level %></div>
+                                                    <div class='col-md-3 col-sm-6'><strong>Location:</strong><br><% x.location.forEach(function(z){ %><%= mappingObject.locationMap[z] %> <%})%></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+                    
+                <% }) %>
         </div>
     </div>
 </div>

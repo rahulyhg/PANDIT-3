@@ -119,8 +119,17 @@ router.post('/course/:course_id/comment',middleware.isLoggedIn,function(req,res)
 
 //define browsing course route
 router.get("/course",function(req,res){
-    res.render("course/browse",{header: "Choose subject and location here"})
-})
+    var query={};
+    var sub = req.query.subject;
+    if(sub){
+        query = {subject:sub};
+    }
+    Course.find(query).populate('tutor.id').exec(function(err,data){
+
+        if (err) throw err;
+        res.render("course/browse",{header: "Choose subject and location here",data:data,mappingObject:mappingObject});
+    })
+});
 
 router.get('/course/:course_id',function(req,res){
     var courseId=req.params.course_id;
