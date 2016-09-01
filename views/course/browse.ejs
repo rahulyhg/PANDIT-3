@@ -1,12 +1,74 @@
 <% include ../partials/header %>
 <div class='container'>
-    <div class='row'>
-        <div class='col-md-3'>
-            <ul class="list-group">
-                <li class="list-group-item active">
-                    Filter <span class="glyphicon glyphicon-menu-down pull-right" aria-hidden="true">
+    <div id='browse'>
+        Loading...
+    </div>
+</div>
+
+
+<script type='text/babel'>
+
+class Main extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={data:[]};
+    }
+    componentWillMount(){
+        $.ajax({
+          url: 'https://udemyclass-timeff.c9users.io/course/api?subject='+this.props.subject,
+          dataType: 'json',
+          type: 'GET',
+          success: function(data) {
+            this.setState({data: data});
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error('https://udemyclass-timeff.c9users.io/course/api?subject'+this.props.subject, status, err.toString());
+          }.bind(this)
+        });
+    }
+    changeSort(x){
+        var sortType={
+            recent:'',
+            rating:function(a,b){
+                if(a.rating>b.rating) return -1;
+                if(b.rating>a.rating) return +1;
+                if(b.rating=a.rating) return 0;
+            },
+            review:'',
+        }
+        // switch(x){
+        //     case 'rating' return this.setState({data:data.sort(sortType.rating)}); break;
+        // }
+        
+        if(x=='rating'){
+
+            this.setState({data:this.state.data.sort(sortType.rating)});
+
+        }
+    }
+    render(){
+        return (<div className='row'>
+                    <div className='col-md-3'>
+                        <FilterTable />
+                    </div>
+                    <div className='col-md-9'>
+                        <Sort onSortTypeChange={this.changeSort.bind(this)}/>
+                        <CourseList courseAll={this.state.data}/>
+                    </div>
+                </div>);
+    }
+}
+
+class FilterTable extends React.Component{
+    constructor(props){
+        super(props);
+    };
+    render(){
+        return (<ul className="list-group">
+                <li className="list-group-item active">
+                    Filter <span className="glyphicon glyphicon-menu-down pull-right" aria-hidden="true" />
                 </li>
-                <li class="list-group-item">
+                <li className="list-group-item">
                     <p>
                         <strong>Subject:</strong> 
                         <select>
@@ -25,76 +87,163 @@
                         </select>
                     </p>
                     <p>
-                      <strong>Price:</strong>  <input type='text' value='0' size='5'> - <input type='text' value='5000' size='5'>
+                      <strong>Price:</strong>  <input type='text' value='0' size='5' /> - <input type='text' value='5000' size='5' />
                     </p>
                     <p>
-                      <strong>Date:</strong><br> <input type='checkbox'> Monday <input type='checkbox'> Tuesday 
-                      <br><input type='checkbox'> Wednesday <input type='checkbox'> Thrusday 
-                      <br><input type='checkbox'> Friday <input type='checkbox'> Saturday 
-                      <br><input type='checkbox'> Sunday 
+                      <strong>Date:</strong><br /> <input type='checkbox' /> Monday <input type='checkbox' /> Tuesday 
+                      <br /><input type='checkbox' /> Wednesday <input type='checkbox' /> Thrusday 
+                      <br /><input type='checkbox' /> Friday <input type='checkbox' /> Saturday 
+                      <br /><input type='checkbox' /> Sunday 
                     </p>
                     <p>
                       <strong>Gender:</strong>
-                      <br><input type='radio' name='gender'> Male 
-                      <input type='radio' name='gender'> Female 
+                      <br /><input type='radio' name='gender'/> Male 
+                      <input type='radio' name='gender' /> Female 
                     </p>
                     <p>
                       <strong>Location:</strong>
-                      <br><input type='checkbox'> BTS Station
-                      <br><input type='checkbox'> MRT Station
-                      <br><input type='checkbox'> Siam
-                      <br><input type='checkbox'> Silom
-                      <br><input type='checkbox'> Home Tutor
+                      <br /><input type='checkbox' /> BTS Station
+                      <br /><input type='checkbox' /> MRT Station
+                      <br /><input type='checkbox' /> Siam
+                      <br /><input type='checkbox' /> Silom
+                      <br /><input type='checkbox' /> Home Tutor
                     </p>
                 </li>
-            </ul>
-        </div>
-        <div class='col-md-9'>
-            <ul class="list-group">
-                <li class="list-group-item active">
-                    <h4 class="list-group-item-heading">Choose your tutor</h4>
-                    <p class="list-group-item-text">
-                        Sort by:
-                        <select class='form-control'> 
-                            <option value='recent'>Recent</option>
-                            <option value='rating'>Rating</option>
-                            <option value='review'>Reviews</option>
-                        </select>
-                    </p>
-                </li>
-            </ul>
-                <% data.forEach(function(x){ %>
-                        <div class="panel panel-default browse" onclick="window.location='/course/<%= x.id%>'">
-                            <div class="panel-body">
-                                <div class='row'>
-                                        <div class='col-md-3'>
-                                            <img src=<% if(x.tutor.id.profilepic){ %>'/uploads/<%= x.tutor.id.profilepic %>'<% }else if(x.tutor.id.facebook.profilepic){ %>'<%=x.tutor.id.facebook.profilepic%>'<% }else{ %>'/uploads/kitten.jpg'<%}%>' class='img-responsive img-circle'>
-                                        </div>
-                                        <div class='col-md-9'>
-                                            <p><h3><%= x.name %></h3>
-                                            <%= x.desc %>
-                                            </p>
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <div class='col-md-3 col-sm-6'><strong>Rating:</strong><br>
-                                                        <% for(var i = 0;i<x.rating;i++) {%>
-                                                        <span class="glyphicon glyphicon-star browse-star" aria-hidden="true"></span>
-                                                        <% } %>
-                                                    </div>
-                                                    <div class='col-md-3 col-sm-6'><strong>Price:</strong><br><%= x.price %> Baht/hr</div>
-                                                    <div class='col-md-3 col-sm-6'><strong>Class:</strong><br><%= x.level %></div>
-                                                    <div class='col-md-3 col-sm-6'><strong>Location:</strong><br><% x.location.forEach(function(z){ %><%= mappingObject.locationMap[z] %> <%})%></div>
-                                                </div>
-                                            </div>
-                                        </div>
+            </ul>);
+    }
+}
+
+class Sort extends React.Component{
+    constructor(props){
+        super(props);
+        // this.state={sort:'recent'};
+    }
+    handleChange(e){
+        // this.setState({sort:e.target.value});
+        this.props.onSortTypeChange(e.target.value);
+    }
+    render(){
+        return (<ul className="list-group">
+                    <li className="list-group-item active">
+                        <h4 className="list-group-item-heading">Choose your tutor</h4>
+                        <p className="list-group-item-text">
+                            Sort by:
+                            <select className='form-control' onChange={this.handleChange.bind(this)}> 
+                                <option value='recent'>Recent</option>
+                                <option value='rating'>Rating</option>
+                                <option value='review'>Reviews</option>
+                            </select>
+                        </p>
+                    </li>
+                </ul>);
+    }
+}
+
+
+class CourseList extends React.Component{
+    constructor(props){
+        super(props);
+    }
+
+    render(){
+        var temp=[];
+        var courseAll = this.props.courseAll;
+        
+        courseAll.forEach(function(course){
+            var pic ="";
+            if(course.tutor.id.profilepic){
+                pic='/uploads'+course.tutor.id.profilepic;
+            }else if(course.tutor.id.facebook.profilepic){
+                pic=course.tutor.id.facebook.profilepic;
+            }else{
+                pic='/uploads/kitten.jpg';
+            }
+            temp.push(<Course 
+            key={course._id}
+            id={course._id}
+            name={course.name}
+            desc={course.desc}
+            rating={course.rating}
+            price={course.price}
+            level={course.level}
+            location={course.location}
+            tutorname={course.tutor.name}
+            pic={pic}
+            />);
+        });
+        
+        return(<div className='course-list'>
+                    {temp}
+                </div>);
+    }
+}
+
+class Course extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={};
+    }
+    courseClick(){
+        window.location='/course/'+this.props.id;
+    }
+    render(){
+        var rating = [];
+        for(let i=0;i<this.props.rating;i++){
+            rating.push(<Star key={i}/>);
+        }
+        
+        
+        var locationMap={
+            'bts':'BTS Station',
+            'mrt':'MRT Station',
+            'siam':'Siam',
+            'silom':'Silom',
+            'home':'Home Tutor'
+            };
+        
+        var loc = [];
+        for(let i =0;i<this.props.location.length;i++){
+            if(i>0){
+                loc.push(', '+locationMap[this.props.location[i]]);
+            }else{
+                loc.push(locationMap[this.props.location[i]]);
+            }
+        }
+        
+        return(<div className="panel panel-default browse" onClick={this.courseClick.bind(this)}>
+                    <div className="panel-body">
+                        <div className='row'>
+                                <div className='col-md-3'>
+                                    <img src={this.props.pic} className='img-responsive img-circle' />
                                 </div>
-                            </div>
+                                <div className='col-md-9'>
+                                    <h3>{this.props.name}</h3>
+                                    <p>
+                                    {this.props.desc}
+                                    </p>
+                                    <div className="panel panel-default">
+                                        <div className="panel-body">
+                                            <div className='col-md-3 col-sm-6'><strong>Rating:</strong><br />
+                                                {rating}
+                                            </div>
+                                            <div className='col-md-3 col-sm-6'><strong>Price:</strong><br />{this.props.price} Baht/hr</div>
+                                            <div className='col-md-3 col-sm-6'><strong>Class:</strong><br />{this.props.level}</div>
+                                            <div className='col-md-3 col-sm-6'><strong>Location:</strong><br />{loc}</div>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
-                    
-                <% }) %>
-        </div>
-    </div>
-</div>
+                    </div>
+                </div>);
+    }
+}
 
+class Star extends React.Component{
+    render(){
+        return (<span className="glyphicon glyphicon-star browse-star" aria-hidden="true"></span>);
+    }
+}
 
+ReactDOM.render(<Main subject='<%= subject %>' /> ,document.querySelector('#browse'));
+</script>
 <% include ../partials/footer %>

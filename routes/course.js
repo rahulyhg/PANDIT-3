@@ -27,6 +27,7 @@ router.post('/course',middleware.isLoggedIn,middleware.isTutor,function(req,res)
         level   :   req.body.class,
         location:   req.body.location,
         video   :   req.body.youtube,
+        rating  :   0
     };
     Course.create(courseData,(err,course)=>{
         if(err) throw err;
@@ -119,17 +120,30 @@ router.post('/course/:course_id/comment',middleware.isLoggedIn,function(req,res)
 
 //define browsing course route
 router.get("/course",function(req,res){
-    var query={};
     var sub = req.query.subject;
-    if(sub){
-        query = {subject:sub};
-    }
-    Course.find(query).populate('tutor.id').exec(function(err,data){
+    res.render("course/browse",{header: "Choose subject and location here",
+    subject:sub,
+    mappingObject:mappingObject});
 
-        if (err) throw err;
-        res.render("course/browse",{header: "Choose subject and location here",data:data,mappingObject:mappingObject});
-    })
 });
+
+    //api for browsing
+    router.get("/course/api",function(req,res){
+        var query={};
+        var sub = req.query.subject;
+        if(sub){
+        query = {subject:sub};
+        }
+        Course.find(query).populate('tutor.id','profilepic facebook.profilepic').exec(function(err,data){
+            // var courseData={
+                
+            // }
+            if(err) throw err;
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "X-Requested-With");
+            res.json(data);
+        })
+    })
 
 router.get('/course/:course_id',function(req,res){
     var courseId=req.params.course_id;

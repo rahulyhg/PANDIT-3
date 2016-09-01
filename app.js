@@ -58,6 +58,11 @@ app.use(indexRoute);
 app.use(userRoute);
 app.use(chatRoute);
 app.use(courseRoute);
+app.use(showError);
+
+function showError(req,res){
+    res.status(404).send("Error 404 Not Found");
+}
 
 //Listen Port,IP
 app.listen(process.env.PORT, process.env.IP,function(){
