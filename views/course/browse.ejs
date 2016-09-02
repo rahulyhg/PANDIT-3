@@ -11,7 +11,7 @@
 class Main extends React.Component{
     constructor(props){
         super(props);
-        this.state={data:[]};
+        this.state={data:[],classSelected:'all',lower:0,upper:5000};
     }
     componentWillMount(){
         $.ajax({
@@ -28,32 +28,63 @@ class Main extends React.Component{
     }
     changeSort(x){
         var sortType={
-            recent:'',
+            recent:function(a,b){
+                if(a.created>b.created) return -1;
+                if(a.created<b.created) return +1;
+                if(a.created==b.created) return 0;
+            },
             rating:function(a,b){
                 if(a.rating>b.rating) return -1;
                 if(b.rating>a.rating) return +1;
-                if(b.rating=a.rating) return 0;
+                if(b.rating==a.rating) return 0;
             },
-            review:'',
+            review:function(a,b){
+                if(a.comment.length>b.comment.length) return -1;
+                if(a.comment.length<b.comment.length) return +1;
+                if(a.comment.length==b.comment.length) return 0;
+            }
         }
-        // switch(x){
-        //     case 'rating' return this.setState({data:data.sort(sortType.rating)}); break;
-        // }
-        
-        if(x=='rating'){
-
-            this.setState({data:this.state.data.sort(sortType.rating)});
-
+        switch(x){
+            case 'recent': this.setState({data:this.state.data.sort(sortType.recent)}); break;
+            case 'rating': this.setState({data:this.state.data.sort(sortType.rating)}); break;
+            case 'review': this.setState({data:this.state.data.sort(sortType.review)}); break;
         }
+    }
+    changeSubject(subject){
+        if(subject=='all'){
+            window.location='/course';
+            return;
+        }
+        window.location='/course?subject='+subject;
+    }
+    changeClass(classPass){
+        this.setState({classSelected:classPass});
+    }
+    changeLowerPrice(priceLower){
+        this.setState({lower:priceLower});
+    }
+    changeHigherPrice(priceHigher){
+        this.setState({upper:priceHigher});
     }
     render(){
         return (<div className='row'>
                     <div className='col-md-3'>
-                        <FilterTable />
+                        <FilterTable onSubjectChange={this.changeSubject.bind(this)}
+                        subject={this.props.subject}
+                        onClassChange={this.changeClass.bind(this)}
+                        lower={this.state.lower}
+                        upper={this.state.upper}
+                        onLowerPrice={this.changeLowerPrice.bind(this)}
+                        onHigherPrice={this.changeHigherPrice.bind(this)}
+                        />
                     </div>
                     <div className='col-md-9'>
                         <Sort onSortTypeChange={this.changeSort.bind(this)}/>
-                        <CourseList courseAll={this.state.data}/>
+                        <CourseList courseAll={this.state.data} 
+                        classSelected={this.state.classSelected}
+                        lower={this.state.lower}
+                        upper={this.state.upper}
+                        />
                     </div>
                 </div>);
     }
@@ -63,6 +94,18 @@ class FilterTable extends React.Component{
     constructor(props){
         super(props);
     };
+    handleSubject(e){
+        this.props.onSubjectChange(e.target.value);
+    }
+    handleClass(e){
+        this.props.onClassChange(e.target.value);
+    }
+    handleLower(e){
+        this.props.onLowerPrice(e.target.value);
+    }
+    handleHigher(e){
+        this.props.onHigherPrice(e.target.value);
+    }
     render(){
         return (<ul className="list-group">
                 <li className="list-group-item active">
@@ -71,23 +114,30 @@ class FilterTable extends React.Component{
                 <li className="list-group-item">
                     <p>
                         <strong>Subject:</strong> 
-                        <select>
-                          <option>Thai</option>
-                          <option>English</option>
+                        <select name='subject' value={this.props.subject} onChange={this.handleSubject.bind(this)}>
+                          <option value='all'>All</option>
+                          <option value='gat'>Gat</option>
+                          <option value='art'>Art</option>
+                          <option value='bio'>Biology</option>
+                          <option value='chemistry'>Chemistry</option>
+                          <option value='chinese'>Chinese</option>
+                          <option value='computer'>Computer</option>
+                          <option value='english'>English</option>
                         </select>
                     </p>
                     <p>
                         <strong>Class:</strong> 
-                        <select>
-                          <option>Kindergarden</option>
-                          <option>Primary School</option>
-                          <option>Secondary School</option>
-                          <option>University</option>
-                          <option>Activities</option>
+                        <select name='class' onChange={this.handleClass.bind(this)}>
+                          <option value='all'>All</option>
+                          <option value='kindergarden'>Kindergarden</option>
+                          <option value='primary'>Primary School</option>
+                          <option value='secondary'>Secondary School</option>
+                          <option value='university'>University</option>
+                          <option value='activities'>Activities</option>
                         </select>
                     </p>
                     <p>
-                      <strong>Price:</strong>  <input type='text' value='0' size='5' /> - <input type='text' value='5000' size='5' />
+                      <strong>Price:</strong>  <input type='number' value={this.props.lower} size='5' onChange={this.handleLower.bind(this)}/> - <input type='number' value={this.props.upper} size='5' onChange={this.handleHigher.bind(this)}/>
                     </p>
                     <p>
                       <strong>Date:</strong><br /> <input type='checkbox' /> Monday <input type='checkbox' /> Tuesday 
@@ -97,8 +147,7 @@ class FilterTable extends React.Component{
                     </p>
                     <p>
                       <strong>Gender:</strong>
-                      <br /><input type='radio' name='gender'/> Male 
-                      <input type='radio' name='gender' /> Female 
+                      <br /><input type='radio' name='gender'/> Male <input type='radio' name='gender' /> Female 
                     </p>
                     <p>
                       <strong>Location:</strong>
@@ -116,10 +165,8 @@ class FilterTable extends React.Component{
 class Sort extends React.Component{
     constructor(props){
         super(props);
-        // this.state={sort:'recent'};
     }
     handleChange(e){
-        // this.setState({sort:e.target.value});
         this.props.onSortTypeChange(e.target.value);
     }
     render(){
@@ -148,6 +195,15 @@ class CourseList extends React.Component{
     render(){
         var temp=[];
         var courseAll = this.props.courseAll;
+        var classAll =false;
+            if (this.props.classSelected=='all'){
+                classAll=true;
+            }
+        var classSpecific = this.props.classSelected;
+        
+        var lowerPrice = this.props.lower;
+        var upperPrice = this.props.upper;
+
         
         courseAll.forEach(function(course){
             var pic ="";
@@ -158,18 +214,22 @@ class CourseList extends React.Component{
             }else{
                 pic='/uploads/kitten.jpg';
             }
-            temp.push(<Course 
-            key={course._id}
-            id={course._id}
-            name={course.name}
-            desc={course.desc}
-            rating={course.rating}
-            price={course.price}
-            level={course.level}
-            location={course.location}
-            tutorname={course.tutor.name}
-            pic={pic}
-            />);
+            if(classAll || classSpecific==course.level){
+                if(course.price>=lowerPrice && course.price<=upperPrice){
+                    temp.push(<Course 
+                    key={course._id}
+                    id={course._id}
+                    name={course.name}
+                    desc={course.desc}
+                    rating={course.rating}
+                    price={course.price}
+                    level={course.level}
+                    location={course.location}
+                    tutorname={course.tutor.name}
+                    pic={pic}
+                    />);
+                }
+            }
         });
         
         return(<div className='course-list'>
