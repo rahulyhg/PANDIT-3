@@ -11,7 +11,7 @@
 class Main extends React.Component{
     constructor(props){
         super(props);
-        this.state={data:[],classSelected:'all',lower:0,upper:5000};
+        this.state={data:[],classSelected:'all',lower:0,upper:5000,gender:'all',location:['bts','mrt','siam','silom','home'],date:['mon','tue','wed','thu','fri','sat','sun']};
     }
     componentWillMount(){
         $.ajax({
@@ -66,6 +66,25 @@ class Main extends React.Component{
     changeHigherPrice(priceHigher){
         this.setState({upper:priceHigher});
     }
+    changeGender(gender){
+        this.setState({gender:gender});
+    }
+    changeLocation(location){
+        if(this.state.location.indexOf(location)!=-1){
+            var temp =this.state.location.filter(function(loc){return loc!=location});
+            this.setState({location:temp});
+        }else{
+            this.setState({location:this.state.location.concat([location])});
+        }
+    }
+    changeDate(date){
+        if(this.state.date.indexOf(date)!=-1){
+            let temp =this.state.date.filter(function(day){return day!=date});
+            this.setState({date:temp});
+        }else{
+            this.setState({date:this.state.date.concat([date])});
+        }
+    }
     render(){
         return (<div className='row'>
                     <div className='col-md-3'>
@@ -76,6 +95,12 @@ class Main extends React.Component{
                         upper={this.state.upper}
                         onLowerPrice={this.changeLowerPrice.bind(this)}
                         onHigherPrice={this.changeHigherPrice.bind(this)}
+                        gender={this.state.gender}
+                        onGenderChange={this.changeGender.bind(this)}
+                        location={this.state.location}
+                        onLocationChange={this.changeLocation.bind(this)}
+                        date={this.state.date}
+                        onDateChange={this.changeDate.bind(this)}
                         />
                     </div>
                     <div className='col-md-9'>
@@ -84,6 +109,9 @@ class Main extends React.Component{
                         classSelected={this.state.classSelected}
                         lower={this.state.lower}
                         upper={this.state.upper}
+                        gender={this.state.gender}
+                        location={this.state.location}
+                        date={this.state.date}
                         />
                     </div>
                 </div>);
@@ -105,6 +133,15 @@ class FilterTable extends React.Component{
     }
     handleHigher(e){
         this.props.onHigherPrice(e.target.value);
+    }
+    handleGenderChange(e){
+        this.props.onGenderChange(e.target.value);
+    }
+    handleLocation(e){
+        this.props.onLocationChange(e.target.value);
+    }
+    handleDate(e){
+        this.props.onDateChange(e.target.value);
     }
     render(){
         return (<ul className="list-group">
@@ -140,22 +177,22 @@ class FilterTable extends React.Component{
                       <strong>Price:</strong>  <input type='number' value={this.props.lower} size='5' onChange={this.handleLower.bind(this)}/> - <input type='number' value={this.props.upper} size='5' onChange={this.handleHigher.bind(this)}/>
                     </p>
                     <p>
-                      <strong>Date:</strong><br /> <input type='checkbox' /> Monday <input type='checkbox' /> Tuesday 
-                      <br /><input type='checkbox' /> Wednesday <input type='checkbox' /> Thrusday 
-                      <br /><input type='checkbox' /> Friday <input type='checkbox' /> Saturday 
-                      <br /><input type='checkbox' /> Sunday 
+                      <strong>Date:</strong><br /> <input type='checkbox' value='mon' checked={this.props.date.indexOf('mon')!=-1} onChange={this.handleDate.bind(this)}/> Monday <input type='checkbox' value='tue' checked={this.props.date.indexOf('tue')!=-1} onChange={this.handleDate.bind(this)}/> Tuesday 
+                      <br /><input type='checkbox' value='wed' checked={this.props.date.indexOf('wed')!=-1} onChange={this.handleDate.bind(this)}/> Wednesday <input type='checkbox' value='thu' checked={this.props.date.indexOf('thu')!=-1} onChange={this.handleDate.bind(this)}/> Thrusday 
+                      <br /><input type='checkbox' value='fri' checked={this.props.date.indexOf('fri')!=-1} onChange={this.handleDate.bind(this)}/> Friday <input type='checkbox' value='sat' checked={this.props.date.indexOf('sat')!=-1} onChange={this.handleDate.bind(this)}/> Saturday 
+                      <br /><input type='checkbox' value='sun' checked={this.props.date.indexOf('sun')!=-1} onChange={this.handleDate.bind(this)}/> Sunday 
                     </p>
                     <p>
                       <strong>Gender:</strong>
-                      <br /><input type='radio' name='gender'/> Male <input type='radio' name='gender' /> Female 
+                      <br /><input type='radio' name='gender' value='all' checked={this.props.gender=='all'} onChange={this.handleGenderChange.bind(this)}/> All <input type='radio' name='gender' value='male' checked={this.props.gender=='male'} onChange={this.handleGenderChange.bind(this)}/> Male <input type='radio' name='gender' value='female' checked={this.props.gender=='female'} onChange={this.handleGenderChange.bind(this)}/> Female 
                     </p>
                     <p>
                       <strong>Location:</strong>
-                      <br /><input type='checkbox' /> BTS Station
-                      <br /><input type='checkbox' /> MRT Station
-                      <br /><input type='checkbox' /> Siam
-                      <br /><input type='checkbox' /> Silom
-                      <br /><input type='checkbox' /> Home Tutor
+                      <br /><input type='checkbox' value='bts' checked={this.props.location.indexOf('bts')!=-1} onChange={this.handleLocation.bind(this)}/> BTS Station
+                      <br /><input type='checkbox' value='mrt' checked={this.props.location.indexOf('mrt')!=-1} onChange={this.handleLocation.bind(this)}/> MRT Station
+                      <br /><input type='checkbox' value='siam' checked={this.props.location.indexOf('siam')!=-1} onChange={this.handleLocation.bind(this)}/> Siam
+                      <br /><input type='checkbox' value='silom' checked={this.props.location.indexOf('silom')!=-1} onChange={this.handleLocation.bind(this)}/> Silom
+                      <br /><input type='checkbox' value='home' checked={this.props.location.indexOf('home')!=-1} onChange={this.handleLocation.bind(this)}/> Home Tutor
                     </p>
                 </li>
             </ul>);
@@ -203,7 +240,16 @@ class CourseList extends React.Component{
         
         var lowerPrice = this.props.lower;
         var upperPrice = this.props.upper;
-
+        
+        var genderAll=false;
+            if(this.props.gender=='all'){
+                genderAll=true;
+            }
+        var genderSpecific = this.props.gender;
+        
+        var location=this.props.location;
+        
+        var date=this.props.date;
         
         courseAll.forEach(function(course){
             var pic ="";
@@ -214,20 +260,37 @@ class CourseList extends React.Component{
             }else{
                 pic='/uploads/kitten.jpg';
             }
+            
+            var loc=false;
+            course.location.forEach(function(x){
+                if (location.indexOf(x)!=-1){
+                    loc=true;
+                }
+            })
+            
+            var day=false;
+            course.date.forEach(function(x){
+                if (date.indexOf(x)!=-1){
+                    day=true;
+                }
+            })
+            
             if(classAll || classSpecific==course.level){
-                if(course.price>=lowerPrice && course.price<=upperPrice){
-                    temp.push(<Course 
-                    key={course._id}
-                    id={course._id}
-                    name={course.name}
-                    desc={course.desc}
-                    rating={course.rating}
-                    price={course.price}
-                    level={course.level}
-                    location={course.location}
-                    tutorname={course.tutor.name}
-                    pic={pic}
-                    />);
+                if(genderAll || genderSpecific==course.tutor.id.gender){
+                    if(course.price>=lowerPrice && course.price<=upperPrice && loc && day){
+                        temp.push(<Course 
+                        key={course._id}
+                        id={course._id}
+                        name={course.name}
+                        desc={course.desc}
+                        rating={course.rating}
+                        price={course.price}
+                        level={course.level}
+                        location={course.location}
+                        tutorname={course.tutor.name}
+                        pic={pic}
+                        />);
+                    }
                 }
             }
         });

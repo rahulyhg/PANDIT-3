@@ -134,7 +134,7 @@ router.get("/course",function(req,res){
         if(sub){
         query = {subject:sub};
         }
-        Course.find(query).populate('tutor.id','profilepic facebook.profilepic').exec(function(err,data){
+        Course.find(query).populate('tutor.id','profilepic facebook.profilepic gender').exec(function(err,data){
             // var courseData={
                 
             // }
