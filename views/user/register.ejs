@@ -9,15 +9,15 @@
                         <div class='row'>
                             <div class='col-md-offset-2 col-md-8'>
                                 <div class='col-md-6 text-center'>
-                                    <label>
+                                    <label id='studentRadio'>
                                         <img src='https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/student.png' class='img-responsive center-block' width=100px;>
-                                        <br><input type='radio' name='type' value='student' <% if(!tutor){ %> checked <% } %>> I'm a Student.
+                                        <br><input type='radio'  name='type' value='student' checked> I'm a Student.
                                     </label>
                                 </div>
                                 <div class='col-md-6 text-center'>
-                                    <label>
+                                    <label id='tutorRadio'>
                                         <img src='https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/scientist.png' class='img-responsive center-block' width=100px;>
-                                        <br><input type='radio' name='type' value='tutor' <% if(tutor){ %>checked <% } %>> I'm a Tutor.
+                                        <br><input type='radio'  name='type' value='tutor' > I'm a Tutor.
                                     </label>
                                 </div>
                             </div>
@@ -37,11 +37,11 @@
                                 <table class='table'>
                                     <tr>
                                         <td>Email:</td>
-                                        <td><input type='text' class='form-control' placeholder='Your Email Address' name='email'></td>
+                                        <td><input type='email' class='form-control' placeholder='Your Email Address' name='email' required></td>
                                     </tr>
                                     <tr>
                                         <td>Password:</td>
-                                        <td><input type='password' class='form-control' placeholder='Your Password' name='password'></td>
+                                        <td><input type='password' class='form-control' placeholder='Your Password' name='password' required></td>
                                     </tr>
                                     <tr>
                                         <td>Tel:</td>
@@ -50,27 +50,27 @@
                                     <tr>
                                         <td>Fullname:</td>
                                         <td>
-                                                <input type='text' class='form-control' placeholder='Firstname - Surname' name='fullname'>
+                                                <input type='text' class='form-control' placeholder='Firstname - Surname' name='fullname' required>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Age:</td>
                                         <td>
-                                            <input type='number' class='form-control' placeholder='Your Age' name='age'>
+                                            <input type='number' class='form-control' placeholder='Your Age' name='age' required>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Gender: </td>
                                         <td>
                                             <select class='form-control' name='gender'>
-                                                <option value='male'>Male</option>
+                                                <option value='male' checked>Male</option>
                                                 <option value='female'>Female</option>
                                             </select>
                                         </td>
                                     </tr>
                                 </table>
                                 <hr>
-                                <table class='table'>
+                                <table class='table hide' id='tutorField'>
                                     <tr>
                                         <td>
                                             Graduated from:
@@ -98,4 +98,17 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    var tutorRadio = $('#tutorRadio');
+    var studentRadio = $('#studentRadio');
+    
+    tutorRadio.click(function(){
+        $('#tutorField').removeClass('hide');
+    })
+    
+    studentRadio.click(function(){
+        $('#tutorField').addClass('hide');
+    })
+    
+</script>
 <% include ../partials/footer %>

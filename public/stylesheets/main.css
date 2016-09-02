@@ -169,3 +169,7 @@ min-width:250px;
     background-color: #e6f2ff;
     transition: 1s;
 }
+
+.hide{
+    display:none;
+}

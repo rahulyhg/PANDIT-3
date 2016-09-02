@@ -20,11 +20,11 @@
                 <table class='table'>
                     <tr>
                         <td>Course Name:</td>
-                        <td><input type='text' name='name' class='form-control' placeholder='eg. Fun with Mathematic' value='<%= data.name %>'></td>
+                        <td><input type='text' name='name' class='form-control' placeholder='eg. Fun with Mathematic' value='<%= data.name %>' required></td>
                     </tr>
                     <tr>
                         <td>Description:</td>
-                        <td><textarea rows='5' name='desc' placeholder='very fun course with me, you will learn many things' class='form-control'><%= data.desc %></textarea></td>
+                        <td><textarea rows='5' name='desc' placeholder='very fun course with me, you will learn many things' class='form-control' required><%= data.desc %></textarea></td>
                     </tr>
                     <tr>
                         <td>Date:</td>
@@ -38,7 +38,7 @@
                     </tr>
                     <tr>
                         <td>Price per hour (Baht):</td>
-                        <td><input type='number' name='price' class='form-control' value='<%= data.price %>'></td>
+                        <td><input type='number' name='price' class='form-control' value='<%= data.price %>'  required></td>
                     </tr>
                     <tr>
                         <td>Class:</td>

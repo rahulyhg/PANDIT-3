@@ -16,7 +16,7 @@
                     <div class="thumbnail">
                         <img src="https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/sub1.png" class="img-responsive">
                         <div class="caption text-center">
-                            <input type='radio' name='subject' value='gat' id='gat-radio'> <strong>GAT</strong>
+                            <input type='radio' name='subject' value='gat' id='gat-radio' required> <strong>GAT</strong>
                             <br> 
                             General Aptitude Test
                         </div>
@@ -101,22 +101,22 @@
                 <table class='table'>
                     <tr>
                         <td>Course Name:</td>
-                        <td><input type='text' name='name' class='form-control' placeholder='eg. Fun with Mathematic'></td>
+                        <td><input type='text' name='name' class='form-control' placeholder='eg. Fun with Mathematic'required></td>
                     </tr>
                     <tr>
                         <td>Description:</td>
-                        <td><textarea rows='5' name='desc' placeholder='very fun course with me, you will learn many things' class='form-control'></textarea></td>
+                        <td><textarea rows='5' name='desc' placeholder='very fun course with me, you will learn many things' class='form-control' required></textarea></td>
                     </tr>
                     <tr>
                         <td>Date:</td>
-                        <td><input type='checkbox' name='date' value='mon'> Monday <input type='checkbox' name='date' value='tue'> Tuesday 
-                      <br><input type='checkbox' name='date' value='wed'> Wednesday <input type='checkbox' name='date' value='thu'> Thrusday 
-                      <br><input type='checkbox' name='date' value='fri'> Friday <input type='checkbox' name='date' value='sat'> Saturday 
-                      <br><input type='checkbox' name='date' value='sun'> Sunday </td>
+                        <td><input type='checkbox' name='date' value='mon' checked> Monday <input  checked type='checkbox' name='date' value='tue'> Tuesday 
+                      <br><input type='checkbox' name='date' value='wed' checked> Wednesday <input  checked type='checkbox' name='date' value='thu'> Thrusday 
+                      <br><input type='checkbox' name='date' value='fri' checked> Friday <input   checked type='checkbox' name='date' value='sat'> Saturday 
+                      <br><input type='checkbox' name='date' value='sun' checked> Sunday </td>
                     </tr>
                     <tr>
                         <td>Price per hour (Baht):</td>
-                        <td><input type='number' name='price' class='form-control'></td>
+                        <td><input type='number' name='price' class='form-control' required></td>
                     </tr>
                     <tr>
                         <td>Class:</td>
@@ -133,15 +133,15 @@
                     <tr>
                         <td>Location:</td>
                         <td>
-                            <input type='checkbox' name='location' value='bts'> BTS Station
+                            <input type='checkbox' name='location' value='bts' checked> BTS Station
                             <br>
-                            <input type='checkbox' name='location' value='mrt'> MRT Station
+                            <input type='checkbox' name='location' value='mrt' checked> MRT Station
                             <br>
-                            <input type='checkbox' name='location' value='siam'> Siam
+                            <input type='checkbox' name='location' value='siam' checked> Siam
                             <br>
-                            <input type='checkbox' name='location' value='silom'> Silom
+                            <input type='checkbox' name='location' value='silom' checked> Silom
                             <br>
-                            <input type='checkbox' name='location' value='home'> Home Tutor
+                            <input type='checkbox' name='location' value='home' checked> Home Tutor
                         </td>
                     </tr>
                     <tr>
