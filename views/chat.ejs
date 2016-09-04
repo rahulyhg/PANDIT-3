@@ -125,8 +125,8 @@ class ChatWindow extends React.Component{
     }
     render(){
         var temp=[];
-        this.props.chatLog.forEach(function(message){
-            temp.push(<p><strong>{message.sender} says: </strong>{message.message}</p>);
+        this.props.chatLog.forEach(function(message,i){
+            temp.push(<p key={i}><strong>{message.sender} says: </strong>{message.message}</p>);
         })
         return (<div id='chatmessage' className='overf'>
                 {temp}
@@ -140,20 +140,24 @@ class ChatBox extends React.Component{
     }
     handleSubmit(e){
         e.preventDefault();
+        if(this.props.roomid){
         var socket = io.connect('/');
         socket.send({
             sender: this.props.name,
             message:this.refs.message.value,
             roomId:this.props.roomid
         });
+        this.refs.message.value='';
+        }
     }
+    
     render(){
         return (<form onSubmit={this.handleSubmit.bind(this)}>
                     <div className='form-group'>
                         <div className='form-group'>
                             <input type='text' name='message' className='form-control chat-input' placeholder="Your message here..." ref='message'/> 
                         </div>
-                        <button type='submit' className='btn btn-primary'>Send</button> <a className='btn btn-warning'>Share Location</a>
+                        <button type='submit' className='btn btn-primary'>Send</button>
                     </div>
                 </form>);
     }
