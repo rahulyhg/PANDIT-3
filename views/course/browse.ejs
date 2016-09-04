@@ -254,7 +254,7 @@ class CourseList extends React.Component{
         courseAll.forEach(function(course){
             var pic ="";
             if(course.tutor.id.profilepic){
-                pic='/uploads'+course.tutor.id.profilepic;
+                pic='/uploads/'+course.tutor.id.profilepic;
             }else if(course.tutor.id.facebook.profilepic){
                 pic=course.tutor.id.facebook.profilepic;
             }else{
