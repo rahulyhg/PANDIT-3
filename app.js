@@ -17,8 +17,7 @@ var chatRoute = require("./routes/chat");
 var courseRoute = require('./routes/course');
 
 
-//Connect DB mongoose.connect(process.env.DATABASE);
-mongoose.connect('mongodb://localhost/pandit');
+mongoose.connect(process.env.DATABASE);
 
 // Get passport config
 require('./configs/passport')(passport);
