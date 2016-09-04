@@ -15,14 +15,14 @@ class Main extends React.Component{
     }
     componentWillMount(){
         $.ajax({
-          url: 'https://udemyclass-timeff.c9users.io/course/api?subject='+this.props.subject,
+          url: '/course/api?subject='+this.props.subject,
           dataType: 'json',
           type: 'GET',
           success: function(data) {
             this.setState({data: data});
           }.bind(this),
           error: function(xhr, status, err) {
-            console.error('https://udemyclass-timeff.c9users.io/course/api?subject'+this.props.subject, status, err.toString());
+            console.error('/course/api?subject'+this.props.subject, status, err.toString());
           }.bind(this)
         });
     }

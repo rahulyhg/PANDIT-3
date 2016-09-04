@@ -17,6 +17,14 @@ middlewareObject.isTutor=function(req,res,next){
     res.redirect("/");
 }
 
+middlewareObject.isStudent=function(req,res,next){
+    if(req.user.type=='student'){
+        return next();
+    }
+    req.flash("error","Student Only Section");
+    res.redirect("/");
+}
+
 middlewareObject.checkCourseOwnership=function(req,res,next){
     Course.findById(req.params.course_id,function(err,foundCourse){
         if (err) throw err;

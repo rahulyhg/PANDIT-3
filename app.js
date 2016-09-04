@@ -6,7 +6,8 @@ var express = require("express"),
     mongoose = require("mongoose"),
     passport = require("passport"),
     methodOverride = require("method-override"),
-    flash = require("connect-flash");
+    flash = require("connect-flash"),
+    io = require('socket.io')();
 
 
 //Define Routes
@@ -64,8 +65,43 @@ function showError(req,res){
     res.status(404).send("Error 404 Not Found");
 }
 
-//Listen Port,IP
-app.listen(process.env.PORT, process.env.IP,function(){
-    console.log("Server has started!");
+// IO Chat 
+var Chat = require('./models/chat');
+io.on('connection',function(socket){
+    socket.on('message',function(m){
+				socket.send(m);
+				socket.broadcast.send(m);
+				
+				Chat.findById(m.roomId,function(err,chat){
+				    if (err) throw err;
+				    var chatMessage={
+				        sender:m.sender,
+				        message:m.message,
+				        // read:false
+				    }
+				    
+				    chat.chatLog.push(chatMessage);
+				    // chat.read=[m.user];
+				    chat.save(function(err,data){
+				        if(err) throw err;
+				    })
+				})
+			})
+	
+// 	socket.on('read',function(m){
+// 	    console.log('read');
+// 	    Chat.findById(m.roomId,function(err,chat){
+// 	        if(err) throw err;
+// 	        chat.read.push(m.user2);
+// 	        chat.save(function(err,data){
+// 	            if(err) throw err;
+// 	        })
+// 	    })
+// 	})
 })
+
+//Listen Port,IP
+io.listen(app.listen(process.env.PORT, process.env.IP,function(){
+    console.log("Server has started!");
+}));
 

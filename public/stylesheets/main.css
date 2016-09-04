@@ -112,9 +112,10 @@ min-width:250px;
 }
 
 
+
 .overf{
     overflow: auto;
-    height:700px;
+    height: 500px;
 }
 
 .rating{

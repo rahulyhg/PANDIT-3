@@ -1,38 +1,164 @@
 <% include partials/header %>
 <div class='container'>
-    <div class='col-md-3'>
-        <ul class="list-group">
-          <li class="list-group-item active">You're talking to</li>
-          <li class="list-group-item">BB King</li>
-          <li class="list-group-item">Eric Clapton</li>
-          <li class="list-group-item">Steve Vai</li>
-          <li class="list-group-item list-group-item-info">John Mayer</li>
-        </ul>
-    </div>
-    <div class='col-md-9'>
-        <div class='well clearfix'>
-            <div class='of'>
-                <p>
-                    <img src='http://placekitten.com/300/300' class='img-circle inline-block' width='50px' height='50px'>
-                    <strong>John Mayer says: </strong> Hi dude!
-                </p>
-                <p class='pull-right'>
-                    <img src='http://placekitten.com/400/500' class='img-circle inline-block' width='50px' height='50px'>
-                    <strong>Dude says: </strong> Hi John!
-                </p>
-            </div>
-                <p>
-                    <form>
-                        <div class='form-group'>
-                            <div class='form-group'>
-                                <input type='text' name='message' class='form-control chat-input' placeholder="Your message here..."> 
-                            </div>
-                                <button type=submit class='btn btn-primary'>Send</button> 
-                                <a class='btn btn-warning'>Share Location</a>
-                        </div>
-                    </form>
-                </p>
-        </div>
+    <div id='chatapp'>
+        Loading...
     </div>
 </div>
+
+<script src='/socket.io/socket.io.js'></script>
+<script type='text/babel'>
+class Main extends React.Component{
+    constructor(props){
+        
+        super(props);
+        
+        
+        
+        this.state=({chatLog:[{'user':'PANDIT','message':'Choose user in your left-hand side list'}],selectedChat:'',chatList:[]});
+        
+        
+        
+        var socket = io.connect('/');
+        
+        socket.on('message',this.updateChatlog.bind(this));
+        
+    }
+    componentWillMount(){
+        // Load Chat List
+        $.ajax({
+          url: '/chat/api/chatlist',
+          dataType: 'json',
+          type: 'GET',
+          success: function(data) {
+            this.setState({chatList: data});
+          }.bind(this),
+          error: function(xhr, status, err) {
+            if(err) throw err;
+          }.bind(this)
+        });
+        
+        
+        var init = this.props.init;
+        if(init!=''){
+            this.changeSelected(init);
+        }
+
+    }
+    updateChatlog(data){
+        if(data.roomId==this.state.selectedChat){
+        var oldMessage = this.state.chatLog;
+        oldMessage.push(data);
+        this.setState({chatLog:oldMessage});
+        }
+    }
+    changeSelected(x){
+        this.setState({selectedChat:x});
+    
+    // Load Chat Log
+        $.ajax({
+          url: '/chat/api/chatlog?roomid='+x,
+          dataType: 'json',
+          type: 'GET',
+          success: function(data) {
+            this.setState({chatLog: data.chatLog});
+          }.bind(this),
+          error: function(xhr, status, err) {
+            if(err) throw err;
+          }.bind(this)
+        });
+    }
+    
+
+    render(){
+        return(<div className='row'>
+            <div className='col-md-3'>
+            <ListUser chatlist={this.state.chatList} select={this.changeSelected.bind(this)} roomid={this.state.selectedChat}/>
+            </div>
+            <div className='col-md-9'>
+            <ChatApp chatLog={this.state.chatLog} id={this.props.id} roomid={this.state.selectedChat} name={this.props.name}/>
+            </div>
+        </div>);
+    }
+}
+
+class ListUser extends React.Component{
+    constructor(props){
+        super(props);
+        
+    }
+    handleSelect(id){
+        this.props.select(id);
+    }
+    render(){
+        var chatList = this.props.chatlist;
+        var temp =[];
+        chatList.forEach(function(list){
+            var nameOfClass='list-group-item browse';
+            if(list._id==this.props.roomid){
+                nameOfClass=nameOfClass+" list-group-item-info";
+            }
+            temp.push(<li className={nameOfClass} key={list._id} onClick={this.handleSelect.bind(this,list._id)}>{list.name}</li>);
+        },this);
+
+        return(<ul className="list-group">
+          <li className="list-group-item active">You're talking to</li>
+          {temp}
+        </ul>);
+    }
+}
+
+class ChatApp extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return (<div className='well clearfix'>
+        <ChatWindow chatLog={this.props.chatLog}/>
+        <ChatBox id={this.props.id} roomid={this.props.roomid} name={this.props.name}/>
+        </div>);
+    };
+}
+
+class ChatWindow extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        var temp=[];
+        this.props.chatLog.forEach(function(message){
+            temp.push(<p><strong>{message.sender} says: </strong>{message.message}</p>);
+        })
+        return (<div id='chatmessage' className='overf'>
+                {temp}
+        </div>);
+    };
+}
+
+class ChatBox extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    handleSubmit(e){
+        e.preventDefault();
+        var socket = io.connect('/');
+        socket.send({
+            sender: this.props.name,
+            message:this.refs.message.value,
+            roomId:this.props.roomid
+        });
+    }
+    render(){
+        return (<form onSubmit={this.handleSubmit.bind(this)}>
+                    <div className='form-group'>
+                        <div className='form-group'>
+                            <input type='text' name='message' className='form-control chat-input' placeholder="Your message here..." ref='message'/> 
+                        </div>
+                        <button type='submit' className='btn btn-primary'>Send</button> <a className='btn btn-warning'>Share Location</a>
+                    </div>
+                </form>);
+    }
+}
+
+ReactDOM.render(<Main id='<%= currentUser._id%>' init="<%= init ? init : '' %>" name='<%= currentUser.fullname ? currentUser.fullname : currentUser.facebook.name %>'/> ,document.querySelector('#chatapp'));
+</script>
 <% include partials/footer %>
