@@ -92,7 +92,7 @@ router.post('/course/:course_id/comment',middleware.isLoggedIn,function(req,res)
     var courseId=req.params.course_id;
     var commentData={
         'student.id':userId,
-        'student.name':req.user.local.fullname || req.user.facebook.name,
+        'student.name':req.user.fullname || req.user.facebook.name,
         rating:req.body.ratinginput,
         content:req.body.review
     }
