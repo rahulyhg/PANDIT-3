@@ -64,7 +64,7 @@ module.exports = function(passport) {
      passport.use(new FacebookStrategy({
         clientID        : process.env.FBID,
         clientSecret    : process.env.FBSECRET,
-        callbackURL     : 'http://udemyclass-timeff.c9users.io/auth/facebook/callback',
+        callbackURL     : process.env.FBCALLBACK+'auth/facebook/callback',
         profileFields: ['id', 'displayName','email','bio','picture.type(large)']
     },function(token,refreshToken,profile,done){
         User.findOne({'facebook.id':profile.id},function(err,user){
