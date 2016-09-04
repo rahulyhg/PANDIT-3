@@ -127,7 +127,7 @@ class ChatWindow extends React.Component{
         var temp=[];
         this.props.chatLog.forEach(function(message,i){
             if(message.sender==this.props.name){
-                temp.push(<p key={i} className='pull-right'><strong>{message.sender} says: </strong>{message.message}</p>);
+                temp.push(<p key={i} className='rightalign'><strong>{message.sender} says: </strong>{message.message}</p>);
             }else{
             temp.push(<p key={i}><strong>{message.sender} says: </strong>{message.message}</p>);
             }

@@ -174,3 +174,7 @@ min-width:250px;
 .hide{
     display:none;
 }
+
+.rightalign{
+    text-align: right;
+}
