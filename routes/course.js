@@ -17,7 +17,7 @@ router.get('/course/create',middleware.isLoggedIn,middleware.isTutor,function(re
 router.post('/course',middleware.isLoggedIn,middleware.isTutor,function(req,res){
     var userId = req.user._id
     var courseData={
-        'tutor.name'  :   req.user.local.fullname || req.user.facebook.name,
+        'tutor.name'  :   req.user.fullname || req.user.facebook.name,
         'tutor.id'    :   userId,
         subject :   req.body.subject,
         name    :   req.body.name,
