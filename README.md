@@ -1,6 +1,6 @@
 # PANDIT
 ![PANDIT Cover](https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/githubcover.png "PANDIT Landing Page")
-## See live demo [here](https://arcane-oasis-82876.herokuapp.com/)!
+## See live demo [here](http://panditmvp.herokuapp.com/)!
 PANDIT is matching platform for private tutor and student running with power of NodeJS, React, Socket.io.
 ![PANDIT Cover 2](https://dl.dropboxusercontent.com/u/8980599/Pandit_hosting/githubcover2.png "PANDIT System")
 ####Features:
