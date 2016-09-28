@@ -45,7 +45,7 @@ class Main extends React.Component{
 
     }
     updateChatlog(data){
-        if(data.roomId==this.state.selectedChat){
+        if(data.roomId==this.state.selectedChat && data.sender!=this.props.name){
         var oldMessage = this.state.chatLog;
         oldMessage.push(data);
         this.setState({chatLog:oldMessage});
