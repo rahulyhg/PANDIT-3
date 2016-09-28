@@ -55,7 +55,6 @@ class Main extends React.Component{
         var oldMessage = this.state.chatLog;
         oldMessage.push(data);
         this.setState({chatLog:oldMessage});
-        }
     }
     changeSelected(x){
         this.setState({selectedChat:x});
