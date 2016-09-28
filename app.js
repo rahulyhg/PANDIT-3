@@ -68,7 +68,6 @@ function showError(req,res){
 var Chat = require('./models/chat');
 io.on('connection',function(socket){
     socket.on('message',function(m){
-				socket.send(m);
 				socket.broadcast.send(m);
 				
 				Chat.findById(m.roomId,function(err,chat){

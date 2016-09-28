@@ -51,6 +51,12 @@ class Main extends React.Component{
         this.setState({chatLog:oldMessage});
         }
     }
+    updateChatLocal(data){
+        var oldMessage = this.state.chatLog;
+        oldMessage.push(data);
+        this.setState({chatLog:oldMessage});
+        }
+    }
     changeSelected(x){
         this.setState({selectedChat:x});
     
@@ -75,7 +81,7 @@ class Main extends React.Component{
             <ListUser chatlist={this.state.chatList} select={this.changeSelected.bind(this)} roomid={this.state.selectedChat}/>
             </div>
             <div className='col-md-9'>
-            <ChatApp chatLog={this.state.chatLog} id={this.props.id} roomid={this.state.selectedChat} name={this.props.name}/>
+            <ChatApp chatLog={this.state.chatLog} id={this.props.id} roomid={this.state.selectedChat} name={this.props.name} updateChatLocal={this.updateChatLocal.bind(this)}/>
             </div>
         </div>);
     }
@@ -114,7 +120,7 @@ class ChatApp extends React.Component{
     render(){
         return (<div className='well clearfix'>
         <ChatWindow chatLog={this.props.chatLog} name={this.props.name}/>
-        <ChatBox id={this.props.id} roomid={this.props.roomid} name={this.props.name}/>
+        <ChatBox id={this.props.id} roomid={this.props.roomid} name={this.props.name} updateChatLocal={this.props.updateChatLocal}/>
         </div>);
     };
 }
@@ -144,6 +150,11 @@ class ChatBox extends React.Component{
     }
     handleSubmit(e){
         e.preventDefault();
+        this.props.updateChatLocal({
+            sender: this.props.name,
+            message:this.refs.message.value,
+            roomId:this.props.roomid
+        });
         if(this.props.roomid){
         var socket = io.connect('/');
         socket.send({
