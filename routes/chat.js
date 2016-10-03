@@ -18,6 +18,12 @@ router.get('/chat',middleware.isLoggedIn,function(req,res){
             console.log(err);
             return;
         }
+        if(!chat){
+            req.flash('error','Chat room not found!');
+            req.redirect('/');
+            return;
+        }
+        
         if (chat.student.id.equals(req.user._id) || chat.tutor.id.equals(req.user._id)){
             req.flash('success','This is your chat room');
             res.render('chat',{header:"Let's Chat",init:chat._id});
