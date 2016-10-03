@@ -11,7 +11,15 @@
 class Main extends React.Component{
     constructor(props){
         super(props);
-        this.state={data:[],classSelected:'all',lower:0,upper:5000,gender:'all',location:['bts','mrt','siam','silom','home'],date:['mon','tue','wed','thu','fri','sat','sun']};
+        
+        this.state={data:[],
+        classSelected:'all',
+        lower:0,
+        upper:5000,
+        gender:'all',
+        location:['bts','mrt','siam','silom','home'],
+        date:['mon','tue','wed','thu','fri','sat','sun']
+        };
     }
     componentWillMount(){
         $.ajax({
