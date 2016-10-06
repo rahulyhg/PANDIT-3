@@ -2,13 +2,13 @@
 var express = require("express"),
     app = express(),
     bodyParser=require("body-parser"),
-    cookieParser = require('cookie-parser'),
+
     mongoose = require("mongoose"),
     passport = require("passport"),
     methodOverride = require("method-override"),
     flash = require("connect-flash"),
     io = require('socket.io')();
-
+//    cookieParser = require('cookie-parser'),
 
 //Define Routes
 var indexRoute = require("./routes/index");
@@ -25,7 +25,7 @@ require('./configs/passport')(passport);
 //Set and use all modules
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(__dirname+"/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
